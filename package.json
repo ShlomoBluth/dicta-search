@@ -1,0 +1,22 @@
+{
+  "name": "dicta-search",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShlomoBluth/dicta-search.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShlomoBluth/dicta-search/issues"
+  },
+  "homepage": "https://github.com/ShlomoBluth/dicta-search#readme",
+  "devDependencies": {
+    "cypress": "^6.2.0"
+  }
+}
