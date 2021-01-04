@@ -1,1 +1,5 @@
-{}
+{
+    "projectId": "y4wdqf",
+    "screenshotOnRunFailure": false,
+    "defaultCommandTimeout": 30000
+}
