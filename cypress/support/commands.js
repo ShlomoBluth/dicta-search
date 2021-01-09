@@ -1,45 +1,29 @@
 
-Cypress.Commands.add('searchRequest',({language,status=200,message='',delaySeconds=0})=>{
-    cy.intercept('POST', '/lexemes', {
+Cypress.Commands.add('newIntercept',(url,delaySeconds,status,name)=>{
+  cy.intercept('POST', url, {
       delayMs:1000*delaySeconds,
-      body:'it worked!',
       statusCode: status
-    }).as('lexemes')
-    cy.intercept('POST', '/related', {
-        delayMs:1000*delaySeconds,
-        body:'it worked!',
-        statusCode: status
-    },).as('related')
-    cy.intercept('POST', '/wordforms', {
-        delayMs:1000*delaySeconds,
-        body:'it worked!',
-        statusCode: status
-    },).as('wordforms')
-    cy.intercept('POST', '/search', {
-        delayMs:1000*delaySeconds,
-        body:'it worked!',
-        statusCode: status
-    },).as('search')
-    cy.intercept('POST', '/books', {
-        delayMs:1000*delaySeconds,
-        body:'it worked!',
-        statusCode: status
-    },).as('books')
-    cy.setLanguageMode(language)
-    cy.get('input[id="search_box"]').type('בראשית ברא')
-    cy.get('button[id="mobile_search_button"]').click({force:true})
-    //cy.get('[class*="loader"').should('exist')
-    cy.wait('@lexemes',{responseTimeout:1000*delaySeconds})
-    cy.wait('@related',{responseTimeout:1000*delaySeconds})
-    cy.wait('@wordforms',{responseTimeout:1000*delaySeconds})
-    cy.wait('@search',{responseTimeout:1000*delaySeconds})
-    cy.wait('@books',{responseTimeout:1000*delaySeconds})
+  }).as(name)
+})
 
-    cy.get('@search').its('response.statusCode').should('eq',status)
+Cypress.Commands.add('searchRequest',({language,status=200,message='',delaySeconds=0})=>{
+  cy.newIntercept('/lexemes',delaySeconds,status,'lexemes')
+  cy.newIntercept('/related',delaySeconds,status,'related')
+  cy.newIntercept('/wordforms',delaySeconds,status,'wordforms')
+  cy.newIntercept('/search',delaySeconds,status,'search')
+  cy.newIntercept('/books',delaySeconds,status,'books')
+  cy.setLanguageMode(language)
+  cy.get('input[id="search_box"]').type('בראשית ברא')
+  if(message.length>0){
+    cy.contains(message,{timeout:1000*delaySeconds}).should('not.exist')
+  }  
+  cy.get('button[id="mobile_search_button"]').click({force:true})
 
-    if(message.length>0){
-        cy.contains(message).should('exist')
-    }
+  if(message.length>0){
+    cy.contains(message,{timeout:1000*delaySeconds}).should('exist')
+  }  
+
+   
 })
 
 Cypress.Commands.add('setLanguageMode',(language)=>{

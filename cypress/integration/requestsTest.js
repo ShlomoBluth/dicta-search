@@ -5,23 +5,24 @@
 describe('RequestsTest',()=>{
 
     
-    beforeEach(() => {
-      cy.visit('https://search.dicta.org.il/he')
-    })
+  beforeEach(() => {
+    cy.visit('https://search.dicta.org.il')
+  })
 
+  
    
 
   
-  it('Error message for response with a delay of 5 minutes when clicking the run butten'+
+  it('Error message for response with a delay of 5 minutes when clicking the run button'+
   ' of search page in hebrew mode',()=>{
     cy.searchRequest({
       language:'Hebrew',
       message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר',
-      delaySeconds: 60*5
+      delaySeconds: 5
     })
   })
 
-  it('Error message for response with a delay of 5 minutes when clicking the run butten'+
+  it('Error message for response with a delay of 5 minutes when clicking the run button'+
   ' of search page in english mode',()=>{
     cy.searchRequest({
       language:'English',
@@ -30,7 +31,7 @@ describe('RequestsTest',()=>{
     })
   })
 
-  it('Error message for response with status code 500 when clicking the run butten of search page'+
+  it('Error message for response with status code 500 when clicking the run button of search page'+
   ' in hebrew mode',()=>{
     cy.searchRequest({
       language:'Hebrew',
@@ -39,7 +40,7 @@ describe('RequestsTest',()=>{
     })
   })
 
-  it('Error message for response with status code 500 when clicking the run butten of search page'+
+  it('Error message for response with status code 500 when clicking the run button of search page'+
   ' in english mode',()=>{
     cy.searchRequest({
       language:'English',
