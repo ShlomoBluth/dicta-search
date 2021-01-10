@@ -12,6 +12,7 @@ Cypress.Commands.add('searchRequest',({language,status=200,message='',delaySecon
   cy.newIntercept('/wordforms',delaySeconds,status,'wordforms')
   cy.newIntercept('/search',delaySeconds,status,'search')
   cy.newIntercept('/books',delaySeconds,status,'books')
+  cy.newIntercept('/textAnalysis',delaySeconds,status,'textAnalysis')
   cy.setLanguageMode(language)
   cy.get('input[id="search_box"]').type('בראשית ברא')
   if(message.length>0){
@@ -20,7 +21,7 @@ Cypress.Commands.add('searchRequest',({language,status=200,message='',delaySecon
   cy.get('button[id="mobile_search_button"]').click({force:true})
 
   if(message.length>0){
-    cy.contains(message,{timeout:1000*delaySeconds}).should('exist')
+    cy.contains(message,{timeout:1000*delaySeconds+30000}).should('exist')
   }  
 
    
@@ -37,7 +38,7 @@ Cypress.Commands.add('setLanguageMode',(language)=>{
       let classAttr = elem.attr("class").substring(0,2);
       if(classAttr!=languageMode)
       {
-        cy.get('a').contains(/^English$/||/^עברית$/).click();
+        cy.get('a').contains(/^English$|^עברית$/g).click();
       }
       if(languageMode=='he'){
         cy.get('a').contains(/^English$/).should('exist')

@@ -5,8 +5,12 @@
 describe('RequestsTest',()=>{
 
     
-  beforeEach(() => {
-    cy.visit('https://search.dicta.org.il')
+  before(() => {
+    cy.visit('https://search.dicta.org.il/')
+  })
+
+  afterEach(() => {
+    cy.go(-2)
   })
 
   
@@ -15,10 +19,11 @@ describe('RequestsTest',()=>{
   
   it('Error message for response with a delay of 5 minutes when clicking the run button'+
   ' of search page in hebrew mode',()=>{
+    cy.visit('https://search.dicta.org.il/')
     cy.searchRequest({
       language:'Hebrew',
       message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר',
-      delaySeconds: 5
+      delaySeconds:  60*5
     })
   })
 
