@@ -1,18 +1,10 @@
 
-Cypress.Commands.add('newIntercept',(url,delaySeconds,status,name)=>{
-  cy.intercept('POST', url, {
-      delayMs:1000*delaySeconds,
-      statusCode: status
-  }).as(name)
-})
 
-Cypress.Commands.add('searchRequest',({language,status=200,message='',delaySeconds=0})=>{
-  cy.newIntercept('/lexemes',delaySeconds,status,'lexemes')
-  cy.newIntercept('/related',delaySeconds,status,'related')
-  cy.newIntercept('/wordforms',delaySeconds,status,'wordforms')
-  cy.newIntercept('/search',delaySeconds,status,'search')
-  cy.newIntercept('/books',delaySeconds,status,'books')
-  cy.newIntercept('/textAnalysis',delaySeconds,status,'textAnalysis')
+Cypress.Commands.add('searchRequest',({url,language,status=200,message='',delaySeconds=0})=>{
+  cy.intercept('POST', url, {
+    delayMs:1000*delaySeconds,
+    statusCode: status
+  })
   cy.setLanguageMode(language)
   cy.get('input[id="search_box"]').type('בראשית ברא')
   if(message.length>0){
@@ -20,8 +12,12 @@ Cypress.Commands.add('searchRequest',({language,status=200,message='',delaySecon
   }  
   cy.get('button[id="mobile_search_button"]').click({force:true})
 
+  if(delaySeconds>0){
+    cy.get(/[class*="spinner"]|[class*="loader"]/g,{timeout:1000*delaySeconds}).should('not.exist')
+  }
+
   if(message.length>0){
-    cy.contains(message,{timeout:1000*delaySeconds+30000}).should('exist')
+    cy.contains(message).should('exist')
   }  
 
    

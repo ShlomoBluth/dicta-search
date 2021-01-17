@@ -1,6 +1,5 @@
 {
     "projectId": "y4wdqf",
     "screenshotOnRunFailure": false,
-    "defaultCommandTimeout": 30000,
-    "baseUrl":"https://search.dicta.org.il/"
+    "defaultCommandTimeout": 30000
 }
