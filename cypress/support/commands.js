@@ -13,7 +13,10 @@ Cypress.Commands.add('searchRequest',({url,language,status=200,message='',delayS
   cy.get('button[id="mobile_search_button"]').click({force:true})
 
   if(delaySeconds>0){
-    cy.get(/[class*="spinner"]|[class*="loader"]/g,{timeout:1000*delaySeconds}).should('not.exist')
+    cy.get('body').then(($body) => {
+      cy.get('[class*="loader"]',{timeout:1000*delaySeconds}).should('not.exist')
+      cy.contains(/Loading|טוען נתונים/g,{timeout:1000*delaySeconds}).should('not.exist')
+    })
   }
 
   if(message.length>0){

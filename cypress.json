@@ -1,5 +1,9 @@
 {
     "projectId": "y4wdqf",
     "screenshotOnRunFailure": false,
-    "defaultCommandTimeout": 30000
+    "defaultCommandTimeout": 10000,
+    "retries": {
+        "runMode": 2,
+        "openMode": 0
+    }
 }
