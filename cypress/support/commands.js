@@ -1,7 +1,7 @@
 
 
 Cypress.Commands.add('searchRequest',({url,language,status=200,message='',delaySeconds=0})=>{
-  cy.intercept('POST', url, {
+  cy.intercept('POST', '**'+url+'**', {
     delayMs:1000*delaySeconds,
     statusCode: status
   })
@@ -34,7 +34,12 @@ Cypress.Commands.add('setLanguageMode',(language)=>{
       }else if(language=='English'){
         languageMode=''
       }
-      let classAttr = elem.attr("class").substring(0,2);
+      let classAttr 
+      if(elem.attr("class").substring(0,2)=='he'){
+        classAttr=elem.attr("class").substring(0,2)
+      }else{
+        classAttr=''
+      }
       if(classAttr!=languageMode)
       {
         cy.get('a').contains(/^English$|^עברית$/g).click();

@@ -14,8 +14,6 @@ describe('RequestsTest',()=>{
   })
 
   
-  
-  // cy.newIntercept('/textAnalysis',delaySeconds,status,'textAnalysis')
 
   it('Error message for textAnalysis response with a delay of 5 minutes when clicking the run button'+
   ' of search page in hebrew mode',()=>{
