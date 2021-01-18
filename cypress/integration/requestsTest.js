@@ -41,7 +41,7 @@ describe('RequestsTest',()=>{
       url:'/textAnalysis',
       language:'Hebrew',
       status:500,
-      message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר'
+      message:'אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר'
     })
   })
 
@@ -82,7 +82,7 @@ describe('RequestsTest',()=>{
       url:'/related',
       language:'Hebrew',
       status:500,
-      message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר'
+      message:'אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר'
     })
   })
 
@@ -123,7 +123,7 @@ describe('RequestsTest',()=>{
       url:'/search',
       language:'Hebrew',
       status:500,
-      message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר'
+      message:'אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר'
     })
   })
 
@@ -165,7 +165,7 @@ describe('RequestsTest',()=>{
       url:'/books',
       language:'Hebrew',
       status:500,
-      message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר'
+      message:'אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר'
     })
   })
 
@@ -206,7 +206,7 @@ describe('RequestsTest',()=>{
       url:'/lexemes',
       language:'Hebrew',
       status:500,
-      message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר'
+      message:'אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר'
     })
   })
 
@@ -248,7 +248,7 @@ describe('RequestsTest',()=>{
       url:'/wordforms',
       language:'Hebrew',
       status:500,
-      message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר'
+      message:'אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר'
     })
   })
 

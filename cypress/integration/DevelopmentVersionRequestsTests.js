@@ -41,7 +41,7 @@ describe('DevelopmentVersionRequestsTests',()=>{
       url:'/textAnalysis',
       language:'Hebrew',
       status:500,
-      message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר'
+      message:'אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר'
     })
   })
 
@@ -49,47 +49,6 @@ describe('DevelopmentVersionRequestsTests',()=>{
   ' in english mode',()=>{
     cy.searchRequest({
       url:'/textAnalysis',
-      language:'English',
-      status:500,
-      message:'Oops. Something went wrong Please try again later'
-    })
-  })
-  
-  
-  it('Error message for collect response with a delay of 5 minutes when clicking the run button'+
-  ' of search page in hebrew mode',()=>{
-    cy.searchRequest({
-      url:'/collect',
-      language:'Hebrew',
-      message:'אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר',
-      delaySeconds:  60*5
-    })
-  })
-
-  it('Error message for collect response with a delay of 5 minutes when clicking the run button'+
-  ' of search page in english mode',()=>{
-    cy.searchRequest({
-      url:'/collect',
-      language:'English',
-      message:'Oops. Something went wrong Please try again later',
-      delaySeconds: 60*5
-    })
-  })
-
-  it('Error message for collect response with status code 500 when clicking the run button of search page'+
-  ' in hebrew mode',()=>{
-    cy.searchRequest({
-      url:'/collect',
-      language:'Hebrew',
-      status:500,
-      message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר'
-    })
-  })
-
-  it('Error message for collect response with status code 500 when clicking the run button of search page'+
-  ' in english mode',()=>{
-    cy.searchRequest({
-      url:'/collect',
       language:'English',
       status:500,
       message:'Oops. Something went wrong Please try again later'
@@ -123,7 +82,7 @@ describe('DevelopmentVersionRequestsTests',()=>{
       url:'/search',
       language:'Hebrew',
       status:500,
-      message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר'
+      message:'אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר'
     })
   })
 
@@ -165,7 +124,7 @@ describe('DevelopmentVersionRequestsTests',()=>{
       url:'/books',
       language:'Hebrew',
       status:500,
-      message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר'
+      message:'אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר'
     })
   })
 
@@ -207,7 +166,7 @@ describe('DevelopmentVersionRequestsTests',()=>{
       url:'/wordforms',
       language:'Hebrew',
       status:500,
-      message:'לא ניתן לגשת כעת לשרת, נסה שוב מאוחר יותר'
+      message:'אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר'
     })
   })
 
