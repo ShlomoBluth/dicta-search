@@ -1,4 +1,22 @@
 
+Cypress.Commands.add('searchRun',(text)=>{
+  cy.get('input[id="search_box"]').type(text)
+  cy.get('button[id="mobile_search_button"]').click({force:true})
+})
+
+
+Cypress.Commands.add('resultsTests',(text)=>{
+  cy.get('[class*="loader"]').should('not.exist')
+  let nakdanResults=''
+  cy.get('[class="sentence-holder"]').within(()=>{
+    cy.get('b').parent().then($restOfTheSentence=>{
+      nakdanResults=$restOfTheSentence.text()
+    })
+  }).then(()=>{
+      expect(nakdanResults.substring(0,nakdanResults.length-1))
+      .to.eq(text)
+  }) 
+})
 
 Cypress.Commands.add('searchRequest',({url,language,status=200,message='',delaySeconds=0})=>{
   cy.intercept('POST', '**'+url+'**', {
@@ -6,11 +24,10 @@ Cypress.Commands.add('searchRequest',({url,language,status=200,message='',delayS
     statusCode: status
   })
   cy.setLanguageMode(language)
-  cy.get('input[id="search_box"]').type('בראשית ברא')
   if(message.length>0){
     cy.contains(message,{timeout:1000*delaySeconds}).should('not.exist')
   }  
-  cy.get('button[id="mobile_search_button"]').click({force:true})
+  cy.searchRun('בראשית ברא')
 
   if(delaySeconds>0){
     cy.get('body').then(($body) => {
