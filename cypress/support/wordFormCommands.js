@@ -91,9 +91,6 @@ Cypress.Commands.add('wordFormsWithNumberOfAppearances',()=>{
             cy.get($searchWord).within(()=>{
                 //Each word form
                 cy.get('[class="slide-li"]').each($wordForm=>{
-                    cy.window().then(win => {
-                        win.gc()
-                    })
                     cy.get($wordForm).within(()=>{
                         cy.getTextNumbers().then($textNum=>{
                             if($textNum==0){
