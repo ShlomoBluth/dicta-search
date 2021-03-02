@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/ShlomoBluth/dicta-search#readme",
   "devDependencies": {
-    "cypress": "^6.5.0"
+    "cypress": "^6.6.0"
   },
   "dependencies": {
     "js-levenshtein": "^1.1.6"

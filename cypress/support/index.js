@@ -16,6 +16,7 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 import './meaningsAndSynonymsCommands.js'
+import './wordFormCommands.js'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

@@ -78,48 +78,65 @@ describe('bible-search-tests',()=>{
 
     
 
-    // it('Each result has word form of every word in the search',()=>{
-    //    cy.hebrewSearchRun({text:'יום השישי',page:'Start'})
-    //     let wordFormsArray=[]
-    //     cy.removeTaamim()
-    //     cy.getWordFormsArray(wordFormsArray).then(()=>{
-    //         cy.resultPagination({
-    //             wordFormsArray:wordFormsArray
-    //         })
-    //     })
-    //     cy.get('[id="word_forms"] > span').click()
-    // })
+    it('Each result has word form of every word in the search',()=>{
+        cy.hebrewSearchRun({text:'יום השישי',page:'Start'})
+        cy.removeTaamim()
+        cy.showAllWordForms()
+        cy.eachSelectedWordFormMatrix().then(selectedWordFormMatrix=>{
+            cy.resultPagination({
+                tests:'wordForms',
+                data:selectedWordFormMatrix
+            })
+        })
+        cy.closeAllWordForms()
+    })
+
+    it('Remove word form',()=>{
+        cy.hebrewSearchRun({text:'יום השישי'})
+        cy.showAllWordForms()
+        cy.contains('יָמִים').click()
+        cy.eachSelectedWordFormMatrix().then(selectedWordFormMatrix=>{
+            cy.resultPagination({
+                tests:'wordForms',
+                data:selectedWordFormMatrix
+            })
+        })
+        cy.contains('יָמִים').click()
+        cy.closeAllWordForms()
+    })
         
        
     
-    // it('Evry word forms with number of Appearances',()=>{
-    //     cy.hebrewSearchRun({text:'אריה',page:'Start'})
-    //     cy.removeTaamim()
-    //     let textNumber
-    //     let numberOfPages
-    //     let numOfResults=0
-    //     cy.get('[id="word_forms"] > span').click()
-    //     cy.get('[class="inner-accordion"] > li').each($accordionLi=>{
-    //         cy.get($accordionLi).within(()=>{
-    //             cy.showAllWordForms($accordionLi)
-    //             cy.contains('בחר הכל').click() 
-    //         })
-    //         cy.get('.text-numbers').each($textNumbers=>{
-    //             if($textNumbers.text()=='(0)'){
-    //                 return false
-    //             }else{
-    //                 cy.wordFormNumberTest($textNumbers,numberOfPages,textNumber,numOfResults)                  
-    //             }
-    //         })
-    //         cy.get($accordionLi).within($wordForms=>{
-    //             cy.contains('בחר הכל').click()
-    //             if($wordForms.find('.inner-accordion-link').length>0){
-    //                 cy.get('.inner-accordion-link').click() 
-    //             }          
-    //         })
-    //     })
-    //     cy.get('[id="word_forms"] > span').click()
-    // })
+    it('Evry word forms with number of Appearances',()=>{
+        cy.hebrewSearchRun({text:'אריה'})
+        cy.removeTaamim()
+        cy.showAllWordForms()
+        cy.wordFormsWithNumberOfAppearances()
+        cy.closeAllWordForms()
+    })
+
+    it('A pair of words that come one after the other',()=>{
+        cy.hebrewSearchRun({text:'שלום בית'})
+        //Number of results
+        cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+            expect(parseInt($numberOfResults.text())).to.eq(116)
+        })
+        cy.hebrewSearchRun({text:'"שלום בית"'})
+        //Number of results
+        cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+            expect(parseInt($numberOfResults.text())).to.eq(2)
+        }).then(()=>{
+            cy.showAllWordForms()
+            cy.removeTaamim()
+            cy.consecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
+                cy.resultPagination({
+                    tests:'wordFormsConsecutive',
+                    data:consecutiveWordFormsArray
+                })
+            })
+        })
+        cy.closeAllWordForms()
+    })
 
     // it('Each result has specific search',()=>{
     //     cy.hebrewSearchRun({text:'לַאֲרָיֹות',page:'Start'})
@@ -155,11 +172,11 @@ describe('bible-search-tests',()=>{
     //         })
     //     })
     //     cy.get('#books').click()
+    //     cy.clearInput()
     // })
 
     // it('Each result has meaning of every word in the search',()=>{
-    //     cy.hebrewSearchRun({text:'יום השישי',page:'Start'})
-    //     cy.removeTaamim()
+    //     cy.hebrewSearchRun({text:'יום השישי'})
     //     cy.showMeaningsAndSynonyms()
     //     cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
     //         cy.resultPagination({
@@ -172,7 +189,6 @@ describe('bible-search-tests',()=>{
 
     // it('Each meaning with number of Appearances',()=>{
     //     cy.hebrewSearchRun({text:'יום השישי'})
-    //     //cy.removeTaamim()
     //     cy.showMeaningsAndSynonyms()
     //     cy.eachMeaningTests()
     //     cy.clearInput()  
@@ -240,45 +256,129 @@ describe('bible-search-tests',()=>{
     //             cy.selectSynonym('רִנָּה')
     //         })
     //     }).then(()=>{
-            // cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-            //     expect(parseInt($numberOfResults.text())).to.eq(6)
-            // })
-    //     })
-        // cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
-        //     cy.resultPagination({tests:'selectedMeaningsAndSynonyms',data:meaningsAndSynonymsMatrix})
-        // })
-        // cy.clearInput()  
-    // })
-
-    // it('A pair of words that come one after the other',()=>{
-    //     cy.hebrewSearchRun({text:'שלום בית',page:'Start'})
-    //     cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-    //         expect(parseInt($numberOfResults.text())).to.eq(116)
-    //     })
-    //     cy.hebrewSearchRun({text:'"שלום בית"'})
-    //     cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-    //         expect(parseInt($numberOfResults.text())).to.eq(2)
-    //     }).then(()=>{
-    //         cy.removeTaamim()
-    //         cy.getConsecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
-    //             cy.resultPagination({
-    //                 tests:'wordFormsConsecutive',
-    //                 data:consecutiveWordFormsArray
-    //             })
+    //         cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+    //             expect(parseInt($numberOfResults.text())).to.eq(6)
     //         })
     //     })
-        
+    //     cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
+    //         cy.resultPagination({tests:'selectedMeaningsAndSynonyms',data:meaningsAndSynonymsMatrix})
+    //     })
+    //     cy.clearInput()  
     // })
 
-    it('Search with root words',()=>{
-        cy.hebrewSearchRun({text:'ברא',page:'Start'})
-         cy.removeTaamim()
-         cy.resultPagination({
-            tests: 'existsInResults',
-            data:'וַיִּבְרָא'
-         })
-        //  cy.get('[id="word_forms"] > span').click()
-     })
+    
+
+    // it('Search with root words',()=>{
+    //     cy.hebrewSearchRun({text:'ברא',page:'Start'})
+    //     cy.removeTaamim()
+    //     cy.existsInResult('וַיִּבְרָא')
+    //     cy.clearInput() 
+    // })
+
+    // it('Full spelling',()=>{
+    //     cy.hebrewSearchRun({text:'דָּוִיד'})
+    //     cy.existsInResult('דָוִד')
+    //     cy.clearInput() 
+    // })
+
+    // it('Partial spelling',()=>{
+    //     cy.hebrewSearchRun({text:'דָוִד'})
+    //     cy.existsInResult('דָּוִיד')
+    //     cy.clearInput() 
+    // })
+
+    // it('Second person',()=>{
+    //     cy.hebrewSearchRun({text:'אֹתְכָה'})
+    //     cy.existsInResult('אֹותְךָ')
+    //     cy.clearInput() 
+    // })
+
+    // it('Second person',()=>{
+    //     cy.hebrewSearchRun({text:'אֹותְךָ'})
+    //     cy.existsInResult('אֹתְכָה')
+    //     cy.clearInput() 
+    // })
+
+    // it('Second person, female',()=>{
+    //     cy.hebrewSearchRun({text:'גַּרְתָּה'})
+    //     cy.existsInResult('גַּרְתָּ')
+    //     cy.clearInput() 
+    // })
+
+    // it('Second person, female',()=>{
+    //     cy.hebrewSearchRun({text:'גַּרְתָּ'})
+    //     cy.existsInResult('גַּרְתָּה')
+    //     cy.clearInput() 
+    // })
+
+    // it('Third person',()=>{
+    //     cy.hebrewSearchRun({text:'כֻּלֹּה'})
+    //     cy.existsInResult('כֻּלֹּו')
+    //     cy.clearInput() 
+    // })
+
+    // it('Third person',()=>{
+    //     cy.hebrewSearchRun({text:'כֻּלֹּו'})
+    //     cy.existsInResult('כֻּלֹּה')
+    //     cy.clearInput() 
+    // })
+
+    // it('Additional א',()=>{
+    //     cy.hebrewSearchRun({text:'ונטמאתם'})
+    //     cy.existsInResult('וְנִטְמֵתֶם')
+    //     cy.clearInput() 
+    // })
+
+    // it('Missing א',()=>{
+    //     cy.hebrewSearchRun({text:'ורציתי'})
+    //     cy.existsInResult('וְרָצִאתִי')
+    //     cy.clearInput() 
+    // })
+
+    // it('Missing ה',()=>{
+    //     cy.hebrewSearchRun({text:'כָּמֹוךָ'})
+    //     cy.existsInResult('כָמֹכָה')
+    //     cy.clearInput() 
+    // })
+
+    // it('Additional ה',()=>{
+    //     cy.hebrewSearchRun({text:'כָמֹכָה'})
+    //     cy.existsInResult('כָּמֹוךָ')
+    //     cy.clearInput() 
+    // })
+
+    // it('Interchangeable letters',()=>{
+    //     cy.hebrewSearchRun({text:'ימלא'})
+    //     cy.existsInResult('יְמַלֵּה')
+    //     cy.clearInput() 
+    // })
+
+    // it('Interchangeable letters',()=>{
+    //     cy.hebrewSearchRun({text:'יְמַלֵּה'})
+    //     cy.existsInResult('יִמָּלֵא')
+    //     cy.clearInput() 
+    // })
+
+    // it('Interchangeable letters',()=>{
+    //     cy.hebrewSearchRun({text:'וארסתיך'})
+    //     cy.existsInResult('וְאֵרַשְׂתִּיךְ')
+    //     cy.clearInput() 
+    // })
+
+    // it('Different ways the bible refers to G-d',()=>{
+    //     cy.hebrewSearchRun({text:'א-להים'})
+    //     cy.existsInResult('הָאֱלֹהִים')
+    //     cy.clearInput() 
+    // })
+
+    // it('Search with numbers',()=>{
+    //     cy.hebrewSearchRun({text:'127'})
+    //     cy.existsInResult('מֵאָה')
+    //     cy.existsInResult('וְעֶשְׂרִים')
+    //     cy.existsInResult('וְשֶׁבַע')
+    //     cy.clearInput() 
+    // })
+
 
 
 

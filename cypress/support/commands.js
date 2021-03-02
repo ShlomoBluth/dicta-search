@@ -1,6 +1,7 @@
 
 Cypress.Commands.add('hebrewSearchRun',({text,page=''})=>{
   cy.setLanguageMode('Hebrew')
+  //if the start page
   if(page=='Start'){
     cy.get('[class*="home-logo-holder"]').should('contain','חיפוש בתנ"ך')
     cy.get('input[id="search_box"]').type(text)
@@ -89,71 +90,10 @@ Cypress.Commands.add('removeTaamim',()=>{
   cy.get('[class*="text-select f-narkis"]').click()
 })
 
-Cypress.Commands.add('showAllWordForms',($accordionLi)=>{
-  cy.document().its('body').find('div.he').then($body=>{
-    if($body.find('[class*="inner-li"]').length>0){
-      cy.get($accordionLi).click()
-    }
-  }).then(()=>{
-    cy.get($accordionLi).then($slideLi=>{
-      if($slideLi.find('.morebtn').length>0){
-        cy.get('.morebtn').click()
-      }
-    })
-  })
-})
 
 
 
-Cypress.Commands.add('getWordFormsArray',(wordFormsArray)=>{
-  cy.get('[id="word_forms"] > span').click()
-  cy.get('[class="inner-accordion"] > li').each($accordionLi=>{
-    let wordForms=[]
-    cy.get($accordionLi).within(()=>{
-      cy.showAllWordForms($accordionLi)
-    })
-    //each word forms of words in the search
-    cy.get('.text-numbers').each($textNumbers=>{
-      if($textNumbers.text()=='(0)'){
-        cy.get($accordionLi).within(()=>{
-          cy.get('.inner-accordion-link').click()
-          cy.get('[class*="loader"]').should('not.exist')
-        })
-        return false
-      }else{
-        wordForms.push($textNumbers.siblings().text())                  
-      }
-    }).then(()=>{
-      wordFormsArray.push(wordForms)
-    })
-  })
-})
-    
 
-Cypress.Commands.add('resultContainsWordsForm',(wordFormsArray,result)=>{
-  let hasWordForm=false
-  for(let i=0;i<wordFormsArray.length;i++){
-    hasWordForm=false
-    for (let j=0;j<wordFormsArray[i].length;j++){ 
-        if(result.text().includes(wordFormsArray[i][j])){
-            hasWordForm=true
-            break  
-        }
-    }
-    expect(hasWordForm).eq(true)
-  }
-})
-
-Cypress.Commands.add('resultContainsConsecutiveWordsForm',(wordFormsArray,result)=>{
-  let hasWordForm=false
-  for(let i=0;i<wordFormsArray.length;i++){
-    if(result.text().includes(wordFormsArray[i])){
-      hasWordForm=true
-      break  
-    }
-  }
-  expect(hasWordForm).eq(true)
-})
 
 Cypress.Commands.add('resultFromBooks',(booksMap,result)=>{
   cy.get(result).within(()=>{
@@ -177,26 +117,7 @@ Cypress.Commands.add('resultForMeanings',(arrayOfMapsWithMeaningsNumbers,result)
   }
 })
 
-Cypress.Commands.add('getConsecutiveWordsFormsArray',()=>{
-  let wordFormsArray=[]
-  let temp
-  let consecutiveWordFormsArray
-  cy.getWordFormsArray(wordFormsArray).then(()=>{
-    temp=wordFormsArray[0]
-    for(let i=1;i<wordFormsArray.length;i++){
-      consecutiveWordFormsArray=[] 
-      for (let j=0;j<wordFormsArray[i].length;j++){
-        for(let k=0;k<temp.length;k++){
-          consecutiveWordFormsArray.push(temp[k]+' '
-          +wordFormsArray[i][j])
-        }
-      }
-      temp=consecutiveWordFormsArray
-    }
-  }).then(()=>{
-    return consecutiveWordFormsArray
-  })
-})
+
 
 Cypress.Commands.add('wordFormNumberTest',($textNumbers,numberOfPages,textNumber,numOfResults)=>{
   let wordForm=''
@@ -284,12 +205,6 @@ Cypress.Commands.add('resultList',(tests,data,textNumbers)=>{
       })
     }else if(tests='selectedMeaningsAndSynonyms'){
       cy.ResultsOfSelectedMeaningsAndSynonyms(result,data)
-    }else if(tests=='existsInResults'){
-      cy.existsInResult(result,data).then(exists=>{
-        if(exists==true){
-          return true
-        }
-      })
     }
   }).then(()=>{
     res.push(textNumbers)
@@ -335,9 +250,6 @@ Cypress.Commands.add('resultPagination',({tests='',data,textNumbers})=>{
     }
     if(textNumbers!==undefined){
       expect(textNumbers).eq(numOfResults)
-    }
-    if(tests=='existsInResults'){
-
     }
     cy.get('.f > span > :nth-child(2)').should('contain',numOfResults)
   })
@@ -493,11 +405,37 @@ Cypress.Commands.add('titleMeaningsOfAWord',()=>{
   })
 })
 
-Cypress.Commands.add('existsInResult',(result,word)=>{
-  let exists =false
-  cy.get(result).within(()=>{
+Cypress.Commands.add('existsInResult',(text)=>{
+  let numberOfPages
+  let exists=false
+  cy.lastPage().then(lastPage=>{
+    numberOfPages=lastPage
+  }).then(()=>{
+    function existsInResults(text){
+      return cy.existsInPageResult(text).then($exists=>{
+        if($exists==true){
+          return true
+        }else{
+          cy.get('[class*="pagination__navigation"]').last().then($lastPage=>{
+            if($lastPage.attr('class').includes('disabled')){
+              expect($exists).to.be.true
+            }else{
+              cy.get('[class*="pagination__navigation"]').last().click()
+              return existsInResults(text)
+            }
+          })
+        }
+      })
+    }
+    existsInResults(text)
+  })
+})
+
+Cypress.Commands.add('existsInPageResult',(text)=>{
+  let exists=false
+  cy.get('.result-list').within(()=>{
     cy.get('b').each($b=>{
-      if($b.text()==word){
+      if($b.text()==text){
         exists=true
       }
     })
@@ -505,6 +443,12 @@ Cypress.Commands.add('existsInResult',(result,word)=>{
     return exists
   })
 })
+
+
+
+
+
+
 
 
 
