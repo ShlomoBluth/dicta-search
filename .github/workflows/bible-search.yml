@@ -3,7 +3,7 @@ name: Bible search Tests
 on: 
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '*/5 * * * *'
+    - cron:  '* */8 * * *'
 
 jobs:
   cross-browser:
@@ -11,7 +11,7 @@ jobs:
     container: cypress/included:3.8.3
     steps:
       - uses: actions/checkout@v1
-      - run: cypress run --browser chrome --spec ./cypress/integration/basicTests.js
-      - run: cypress run --browser firefox --spec ./cypress/integration/basicTests.js
+      - run: cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js
+      - run: cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js
 
       
