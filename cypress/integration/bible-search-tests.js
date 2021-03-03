@@ -109,7 +109,6 @@ describe('bible-search-tests',()=>{
     
     it('Evry word forms with number of Appearances',()=>{
         cy.hebrewSearchRun({text:'אריה'})
-        cy.removeTaamim()
         cy.showAllWordForms()
         cy.wordFormsWithNumberOfAppearances()
         cy.closeAllWordForms()
@@ -127,7 +126,6 @@ describe('bible-search-tests',()=>{
             expect(parseInt($numberOfResults.text())).to.eq(2)
         }).then(()=>{
             cy.showAllWordForms()
-            cy.removeTaamim()
             cy.consecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
                 cy.resultPagination({
                     tests:'wordFormsConsecutive',
@@ -151,29 +149,19 @@ describe('bible-search-tests',()=>{
 
     
 
-    // it('Each result has consecutive word forms of every word in the search',()=>{
-    //     cy.hebrewSearchRun({text:'"יום השישי"'})
-    //     cy.removeTaamim()
-        // cy.getConsecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
-        //     cy.resultPagination({
-        //         tests:'wordFormsConsecutive',
-        //         data:consecutiveWordFormsArray
-        //     })
-        // })
-    //     cy.get('[id="word_forms"] > span').click()
-    // })
+   
 
-    // it('Evry books with number of Appearances',()=>{
-    //     cy.hebrewSearchRun({text:'יום השישי'})
-    //     cy.booksMap().then(books=>{
-    //         cy.resultPagination({
-    //             tests:'books',
-    //             data:books
-    //         })
-    //     })
-    //     cy.get('#books').click()
-    //     cy.clearInput()
-    // })
+    it('Evry books with number of Appearances',()=>{
+        cy.hebrewSearchRun({text:'יום השישי'})
+        cy.booksMap().then(books=>{
+            cy.resultPagination({
+                tests:'books',
+                data:books
+            })
+        })
+        cy.get('#books').click()
+        cy.clearInput()
+    })
 
     // it('Each result has meaning of every word in the search',()=>{
     //     cy.hebrewSearchRun({text:'יום השישי'})

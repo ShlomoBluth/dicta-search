@@ -1,3 +1,29 @@
+Cypress.Commands.add('setLanguageMode',(language)=>{
+  cy.get('body').then(elem => {
+    let languageMode
+    if(language=='Hebrew'){
+      languageMode='he'
+    }else if(language=='English'){
+      languageMode=''
+    }
+    let classAttr 
+    if(elem.attr("class").substring(0,2)=='he'){
+      classAttr=elem.attr("class").substring(0,2)
+    }else{
+      classAttr=''
+    }
+    if(classAttr!=languageMode)
+    {
+      cy.get('a').contains(/^English$|^עברית$/g).click();
+    }
+    if(languageMode=='he'){
+      cy.get('a').contains(/^English$/).should('exist')
+    } else{
+      cy.get('a').contains(/^עברית$/).should('exist')
+    }
+  })
+})
+
 
 Cypress.Commands.add('hebrewSearchRun',({text,page=''})=>{
   cy.setLanguageMode('Hebrew')
@@ -17,6 +43,10 @@ Cypress.Commands.add('hebrewSearchRun',({text,page=''})=>{
 Cypress.Commands.add('clearInput',()=>{
   cy.get('input[class*="search-form-control"]').clear()
   cy.get('[class*="fa-search text"]').click({force:true})
+})
+
+Cypress.Commands.add('removeTaamim',()=>{
+  cy.get('[class*="text-select f-narkis"]').click()
 })
 
 
@@ -60,53 +90,6 @@ Cypress.Commands.add('searchRequest',({url,language,status=200,message='',delayS
 })
 
 
-Cypress.Commands.add('setLanguageMode',(language)=>{
-    cy.get('body').then(elem => {
-      let languageMode
-      if(language=='Hebrew'){
-        languageMode='he'
-      }else if(language=='English'){
-        languageMode=''
-      }
-      let classAttr 
-      if(elem.attr("class").substring(0,2)=='he'){
-        classAttr=elem.attr("class").substring(0,2)
-      }else{
-        classAttr=''
-      }
-      if(classAttr!=languageMode)
-      {
-        cy.get('a').contains(/^English$|^עברית$/g).click();
-      }
-      if(languageMode=='he'){
-        cy.get('a').contains(/^English$/).should('exist')
-      } else{
-        cy.get('a').contains(/^עברית$/).should('exist')
-      }
-    })
-})
-
-Cypress.Commands.add('removeTaamim',()=>{
-  cy.get('[class*="text-select f-narkis"]').click()
-})
-
-
-
-
-
-
-Cypress.Commands.add('resultFromBooks',(booksMap,result)=>{
-  cy.get(result).within(()=>{
-    cy.get('.text-primary').then(book=>{
-      for (let [key, value] of booksMap) {
-        if(book.text().includes(key)){
-          booksMap.set(key,value-1)
-        }
-      }
-    })
-  })
-})
-
 Cypress.Commands.add('resultForMeanings',(arrayOfMapsWithMeaningsNumbers,result)=>{
   for(let i=0;i<arrayOfMapsWithMeaningsNumbers.length;i++){
     for(let [key,value] of arrayOfMapsWithMeaningsNumbers[i]){
@@ -117,63 +100,6 @@ Cypress.Commands.add('resultForMeanings',(arrayOfMapsWithMeaningsNumbers,result)
   }
 })
 
-
-
-Cypress.Commands.add('wordFormNumberTest',($textNumbers,numberOfPages,textNumber,numOfResults)=>{
-  let wordForm=''
-  cy.get($textNumbers).parent().parent().within(()=>{
-    textNumber=parseInt($textNumbers.text().substring(1,$textNumbers.text().length-1))
-    cy.get('input[type="checkbox"]').click({force: true})
-    cy.get('[class="f-narkis"]').then(fNarkis=>{
-      wordForm=fNarkis.text()
-    })
-  })
-
-
-
-  cy.get('[class*="loader"]').should('not.exist')
-  cy.get('body').then(($body)=>{  
-    if($body.find('.pagination').length>0){
-      cy.get('ul[class="pagination"] > li').then(elements=>{
-        numberOfPages=elements.length
-      })
-    }
-  }).then(()=>{
-    cy.get('body').then(($body)=>{  
-      if($body.find('.pagination').length>0){
-        cy.get('ul[class="pagination"] > li').then(elements=>{
-          numberOfPages=elements.length
-        })
-      }
-  
-      if($body.find('.result-list').length>0){
-        cy.log($body.find('.result-list').length)
-        cy.get('.result-list > li').each(result=>{
-          numOfResults=numOfResults+result.length
-          expect(result.text()).contains(wordForm)
-        }) 
-        //Loop through each page
-        for(let i=0;i<numberOfPages-3;i++){    
-          cy.get('ul[class="pagination"] > li').last().click()
-          cy.get('.result-list > li').each(result=>{
-            numOfResults=numOfResults+result.length
-            cy.get(result).contains(wordForm)
-          })  
-        }
-      }
-    }).then(()=>{
-      if(wordForm!=''){
-        expect(textNumber).eq(numOfResults)
-      }
-    })            
-  })
-  
-  
-
-  cy.get($textNumbers).parent().parent().within(()=>{
-    cy.get('input[type="checkbox"]').click({force: true})
-  })
-})
 
 Cypress.Commands.add('resultList',(tests,data,textNumbers)=>{
   let res=[]
@@ -255,24 +181,7 @@ Cypress.Commands.add('resultPagination',({tests='',data,textNumbers})=>{
   })
 })
 
-Cypress.Commands.add('booksMap',()=>{
-  let books=new Map()
-  cy.get('#books').click()
-  cy.get('.inner-accordion-link').each($link=>{
-    cy.get($link).click()
-    cy.get('.inner-accordion-content > .selectAll > .f').click()
-    cy.get('.slide-list > li').each(li=>{
-      cy.contains('()').should('not.exist').then(()=>{
-        books.set(li.text().substring(li.text().indexOf('ספר')+4),
-        parseInt(li.text().substring(li.text().indexOf('(')+1,li.text().indexOf(')'))))
-      })
-    })
-    cy.get('.inner-accordion-content > .selectAll > .f').click()
-    cy.get($link).click()
-  }).then(()=>{
-    return books
-  })
-})
+
 
 
 
