@@ -177,7 +177,6 @@ describe('bible-search-tests',()=>{
 
     it('Each books with number of Appearances',()=>{
         cy.hebrewSearchRun({text:'יום השישי'})
-        cy.removeTaamim()
         cy.showBooks()
         cy.selectedBooksMap().then(selectedBooks=>{
             expect(selectedBooks.size).eq(7)
@@ -220,7 +219,7 @@ describe('bible-search-tests',()=>{
         cy.clearInput()  
     })
 
-    it('Evry meaning with synonym and a number of Appearances',()=>{
+    it('Each meaning with synonym and a number of Appearances',()=>{
         cy.hebrewSearchRun({text:'שיר השירים'})
         cy.showMeaningsAndSynonyms()
         cy.synonymsTests()
@@ -295,8 +294,7 @@ describe('bible-search-tests',()=>{
     
 
     it('Search with root words',()=>{
-        cy.hebrewSearchRun({text:'ברא',page:'Start'})
-        cy.removeTaamim()
+        cy.hebrewSearchRun({text:'ברא'})
         cy.existsInResult('וַיִּבְרָא')
         cy.clearInput() 
     })
