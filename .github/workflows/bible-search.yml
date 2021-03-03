@@ -1,9 +1,10 @@
 name: Bible search Tests
 
 on: 
-  schedule:
+  push
+  #schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '* */8 * * *'
+    #- cron:  '* */8 * * *'
 
 jobs:
   cross-browser:
