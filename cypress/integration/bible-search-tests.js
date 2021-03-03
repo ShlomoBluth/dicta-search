@@ -11,11 +11,11 @@ describe('bible-search-tests',()=>{
     })
 
     afterEach(() => {
-        // cy.get('a[id="meanings_and_synonyms"]').then($meaningsAndSynonyms=>{
-        //     if($meaningsAndSynonyms.attr('class').includes('active')){
-
-        //     }
-        // })
+        cy.get('a[id="meanings_and_synonyms"]').then($meaningsAndSynonyms=>{
+            if($meaningsAndSynonyms.attr('class').includes('active')){
+                cy.clearInput() 
+            }
+        })
         cy.get('a[id="word_forms"]').then($wordForm=>{
             if($wordForm.attr('class').includes('active')){
                 cy.closeAllWordForms()
@@ -27,68 +27,6 @@ describe('bible-search-tests',()=>{
             }
         })
     })
-    
-
-    // it('Run search in hebrew mode',()=>{
-    //     cy.setLanguageMode('Hebrew')
-    //     cy.get('[class*="home-logo-holder"]').should('contain','חיפוש בתנ"ך')
-    //     cy.searchRun('שיר השירים')
-    //     cy.resultsTests('שִׁ֥יר הַשִּׁירִ֖ים אֲשֶׁ֥ר לִשְׁלֹמֹֽה')
-    // })
-
-    // it('Run search in english mode',()=>{
-    //     cy.setLanguageMode('English')
-    //     cy.get('[class*="home-logo-holder"]').should('contain','חיפוש בתנ"ך')
-    //     cy.searchRun('שיר השירים')
-    //     cy.resultsTests('שִׁ֥יר הַשִּׁירִ֖ים אֲשֶׁ֥ר לִשְׁלֹמֹֽה')
-    // })
-
-    // it('Run search in hebrew mode',()=>{
-    //     cy.setLanguageMode('Hebrew')
-    //     cy.get('[class*="home-logo-holder"]').should('contain','חיפוש בתנ"ך')
-    //     cy.searchRun('"יום השישי"')
-    //     cy.get('[class*="loader"]').should('not.exist')
-    //     cy.get('[class*="top-number-of-results"] > span > :nth-child(2)')
-    //     .contains(new RegExp('6', "g")).should('exist')
-    //     cy.resultsTests('בַּיֹּום֙ הַשִּׁשִּׁ֔י נָשִׂ֖יא לִבְנֵ֣י גָ֑ד אֶלְיָסָ֖ף בֶּן־דְּעוּאֵֽל׃')
-    // })
-
-    // it('Run search in hebrew mode',()=>{
-    //     cy.setLanguageMode('Hebrew')
-    //     cy.get('[class*="home-logo-holder"]').should('contain','חיפוש בתנ"ך')
-    //     cy.searchRun('"יום השישי"')
-    //     cy.get('[class*="loader"]').should('not.exist')
-    //     cy.get('[class*="top-number-of-results"] > span > :nth-child(2)')
-    //     .contains(new RegExp('6', "g")).should('exist')
-    //     cy.get('.result-list > li').should('have.length',6)
-    //     //cy.resultsTests('בַּיֹּום֙ הַשִּׁשִּׁ֔י נָשִׂ֖יא לִבְנֵ֣י גָ֑ד אֶלְיָסָ֖ף בֶּן־דְּעוּאֵֽל׃')
-    // })
-
-    // it('Run search in hebrew mode',()=>{
-    //     cy.setLanguageMode('Hebrew')
-    //     cy.get('[class*="home-logo-holder"]').should('contain','חיפוש בתנ"ך')
-    //     cy.searchRun('יום השישי')
-    //     cy.get('[class*="loader"]').should('not.exist')
-    //     // cy.get('[class*="top-number-of-results"] > span > :nth-child(2)')
-    //     // .contains(new RegExp('12', "g")).should('exist')
-    //     let numOfResults=0
-    //     let numberOfPages
-        // cy.get('ul[class="pagination"] > li').then(elements=>{
-        //     numberOfPages=elements.length
-        // }).then(()=>{
-        //     cy.get('.result-list > li').then(elem1=>{
-        //         numOfResults=numOfResults+elem1.length
-        //     }) 
-        //     for(let i=0;i<numberOfPages-3;i++){    
-        //         cy.get('ul[class="pagination"] > li').last().click()
-        //         cy.get('.result-list > li').then(elem1=>{
-        //             numOfResults=numOfResults+elem1.length
-        //         })  
-        //     }
-        // }).then(()=>{
-        //      expect(numOfResults).eq(12)
-        // })
-    // })
 
     
 
@@ -104,7 +42,6 @@ describe('bible-search-tests',()=>{
                 data:selectedWordFormMatrix
             })
         })
-        cy.closeAllWordForms()
     })
 
     it('Remove word form',()=>{
@@ -127,7 +64,6 @@ describe('bible-search-tests',()=>{
             })
         })
         cy.contains('יָמִים').click()
-        cy.closeAllWordForms()
     })
         
        
@@ -136,7 +72,6 @@ describe('bible-search-tests',()=>{
         cy.hebrewSearchRun({text:'אריה'})
         cy.showAllWordForms()
         cy.wordFormsWithNumberOfAppearances()
-        cy.closeAllWordForms()
     })
 
     it('A pair of words that come one after the other',()=>{
@@ -209,21 +144,18 @@ describe('bible-search-tests',()=>{
                 data:meaningsAndSynonymsMatrix
             })
         })
-        cy.clearInput()  
     })
 
     it('Each meaning with number of Appearances',()=>{
         cy.hebrewSearchRun({text:'יום השישי'})
         cy.showMeaningsAndSynonyms()
-        cy.eachMeaningTests()
-        cy.clearInput()  
+        cy.eachMeaningTests() 
     })
 
     it('Each meaning with synonym and a number of Appearances',()=>{
         cy.hebrewSearchRun({text:'שיר השירים'})
         cy.showMeaningsAndSynonyms()
-        cy.synonymsTests()
-        cy.clearInput()  
+        cy.synonymsTests() 
     })
 
     it('Meaning with synonyms',()=>{
@@ -249,7 +181,6 @@ describe('bible-search-tests',()=>{
                 })
             })
         })
-        cy.clearInput()  
     })
 
     it('remove Meaning',()=>{
@@ -263,8 +194,7 @@ describe('bible-search-tests',()=>{
                     data:meaningsAndSynonymsMatrix
                 })
             })
-        })  
-        cy.clearInput()      
+        })       
     })
 
     
@@ -288,7 +218,6 @@ describe('bible-search-tests',()=>{
         cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
             cy.resultPagination({tests:'selectedMeaningsAndSynonyms',data:meaningsAndSynonymsMatrix})
         })
-        cy.clearInput()  
     })
 
     
@@ -296,103 +225,86 @@ describe('bible-search-tests',()=>{
     it('Search with root words',()=>{
         cy.hebrewSearchRun({text:'ברא'})
         cy.existsInResult('וַיִּבְרָא')
-        cy.clearInput() 
     })
 
     it('Full spelling',()=>{
         cy.hebrewSearchRun({text:'דָּוִיד'})
         cy.existsInResult('דָוִד')
-        cy.clearInput() 
     })
 
     it('Partial spelling',()=>{
         cy.hebrewSearchRun({text:'דָוִד'})
         cy.existsInResult('דָּוִיד')
-        cy.clearInput() 
     })
 
     it('Second person',()=>{
         cy.hebrewSearchRun({text:'אֹתְכָה'})
         cy.existsInResult('אֹותְךָ')
-        cy.clearInput() 
     })
 
     it('Second person',()=>{
         cy.hebrewSearchRun({text:'אֹותְךָ'})
         cy.existsInResult('אֹתְכָה')
-        cy.clearInput() 
     })
 
     it('Second person, female',()=>{
         cy.hebrewSearchRun({text:'גַּרְתָּה'})
         cy.existsInResult('גַּרְתָּ')
-        cy.clearInput() 
     })
 
     it('Second person, female',()=>{
         cy.hebrewSearchRun({text:'גַּרְתָּ'})
         cy.existsInResult('גַּרְתָּה')
-        cy.clearInput() 
     })
 
     it('Third person',()=>{
         cy.hebrewSearchRun({text:'כֻּלֹּה'})
         cy.existsInResult('כֻּלֹּו')
-        cy.clearInput() 
     })
 
     it('Third person',()=>{
         cy.hebrewSearchRun({text:'כֻּלֹּו'})
         cy.existsInResult('כֻּלֹּה')
-        cy.clearInput() 
     })
 
     it('Additional א',()=>{
         cy.hebrewSearchRun({text:'ונטמאתם'})
         cy.existsInResult('וְנִטְמֵתֶם')
-        cy.clearInput() 
     })
 
     it('Missing א',()=>{
         cy.hebrewSearchRun({text:'ורציתי'})
         cy.existsInResult('וְרָצִאתִי')
-        cy.clearInput() 
     })
 
     it('Missing ה',()=>{
         cy.hebrewSearchRun({text:'כָּמֹוךָ'})
         cy.existsInResult('כָמֹכָה')
-        cy.clearInput() 
     })
 
     it('Additional ה',()=>{
         cy.hebrewSearchRun({text:'כָמֹכָה'})
         cy.existsInResult('כָּמֹוךָ')
-        cy.clearInput() 
     })
 
     it('Interchangeable letters',()=>{
         cy.hebrewSearchRun({text:'ימלא'})
-        cy.existsInResult('יְמַלֵּה')
-        cy.clearInput() 
+        cy.existsInResult('יְמַלֵּה') 
     })
 
     it('Interchangeable letters',()=>{
         cy.hebrewSearchRun({text:'יְמַלֵּה'})
         cy.existsInResult('יִמָּלֵא')
-        cy.clearInput() 
     })
 
     it('Interchangeable letters',()=>{
         cy.hebrewSearchRun({text:'וארסתיך'})
-        cy.existsInResult('וְאֵרַשְׂתִּיךְ')
-        cy.clearInput() 
+        cy.existsInResult('וְאֵרַשְׂתִּיךְ') 
     })
 
     it('Different ways the bible refers to G-d',()=>{
         cy.hebrewSearchRun({text:'א-להים'})
         cy.existsInResult('הָאֱלֹהִים')
-        cy.clearInput() 
     })
 
     it('Search with numbers',()=>{
@@ -400,7 +312,6 @@ describe('bible-search-tests',()=>{
         cy.existsInResult('מֵאָה')
         cy.existsInResult('וְעֶשְׂרִים')
         cy.existsInResult('וְשֶׁבַע')
-        cy.clearInput() 
     })
 
 
