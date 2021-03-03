@@ -59,7 +59,6 @@ Cypress.Commands.add('selectedWordFormArr',()=>{
         if($wordForm.text().includes('(0)')){
             return false
         }
-        cy.log($wordForm.text())
         cy.get($wordForm).within(()=>{
             cy.getTextNumbers().then(textMumbers=>{
                 if(textMumbers!=0){

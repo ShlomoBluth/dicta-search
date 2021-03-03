@@ -10,9 +10,23 @@ describe('bible-search-tests',()=>{
         cy.visit('https://use-dicta-components-2--cranky-banach-377068.netlify.app/')
     })
 
-    // afterEach(() => {
-    //     cy.go(-2)
-    //   })
+    afterEach(() => {
+        // cy.get('a[id="meanings_and_synonyms"]').then($meaningsAndSynonyms=>{
+        //     if($meaningsAndSynonyms.attr('class').includes('active')){
+
+        //     }
+        // })
+        cy.get('a[id="word_forms"]').then($wordForm=>{
+            if($wordForm.attr('class').includes('active')){
+                cy.closeAllWordForms()
+            }
+        })
+        cy.get('a[id="books"]').then($books=>{
+            if($books.attr('class').includes('active')){
+                cy.closeBooks()
+            }
+        })
+    })
     
 
     // it('Run search in hebrew mode',()=>{
@@ -83,6 +97,8 @@ describe('bible-search-tests',()=>{
         cy.removeTaamim()
         cy.showAllWordForms()
         cy.eachSelectedWordFormMatrix().then(selectedWordFormMatrix=>{
+            expect(selectedWordFormMatrix[0].length).eq(12)
+            expect(selectedWordFormMatrix[1].length).eq(2)
             cy.resultPagination({
                 tests:'wordForms',
                 data:selectedWordFormMatrix
@@ -94,8 +110,17 @@ describe('bible-search-tests',()=>{
     it('Remove word form',()=>{
         cy.hebrewSearchRun({text:'יום השישי'})
         cy.showAllWordForms()
-        cy.contains('יָמִים').click()
+        cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+            expect(parseInt($numberOfResults.text())).to.eq(12)
+        })
+        cy.contains('בַּיֹּום').click()
+        cy.get('[class*="loader"]').should('not.exist')
+        cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+            expect(parseInt($numberOfResults.text())).to.eq(11)
+        })
         cy.eachSelectedWordFormMatrix().then(selectedWordFormMatrix=>{
+            expect(selectedWordFormMatrix[0].length).eq(11)
+            expect(selectedWordFormMatrix[1].length).eq(2)
             cy.resultPagination({
                 tests:'wordForms',
                 data:selectedWordFormMatrix
@@ -107,7 +132,7 @@ describe('bible-search-tests',()=>{
         
        
     
-    it('Evry word forms with number of Appearances',()=>{
+    it('Each word form with number of Appearances',()=>{
         cy.hebrewSearchRun({text:'אריה'})
         cy.showAllWordForms()
         cy.wordFormsWithNumberOfAppearances()
@@ -127,13 +152,15 @@ describe('bible-search-tests',()=>{
         }).then(()=>{
             cy.showAllWordForms()
             cy.consecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
+                // for(let i=0;i<consecutiveWordFormsArray.length;i++){
+                //     cy.log(consecutiveWordFormsArray[i])
+                // }
                 cy.resultPagination({
                     tests:'wordFormsConsecutive',
                     data:consecutiveWordFormsArray
                 })
             })
         })
-        cy.closeAllWordForms()
     })
 
     // it('Each result has specific search',()=>{
@@ -151,16 +178,30 @@ describe('bible-search-tests',()=>{
 
    
 
-    it('Evry books with number of Appearances',()=>{
+    it('Each books with number of Appearances',()=>{
         cy.hebrewSearchRun({text:'יום השישי'})
-        cy.booksMap().then(books=>{
+        cy.removeTaamim()
+        cy.showBooks()
+        cy.selectedBooksMap().then(selectedBooks=>{
+            expect(selectedBooks.size).eq(7)
             cy.resultPagination({
                 tests:'books',
-                data:books
+                data:selectedBooks
             })
         })
-        cy.get('#books').click()
-        cy.clearInput()
+    })
+
+    it('Remove book',()=>{
+        cy.hebrewSearchRun({text:'יום השישי'})
+        cy.showBooks()
+        cy.contains('ספר שמות').click()
+        cy.selectedBooksMap().then(selectedBooks=>{
+            expect(selectedBooks.size).eq(6)
+            cy.resultPagination({
+                tests:'books',
+                data:selectedBooks
+            })
+        })
     })
 
     // it('Each result has meaning of every word in the search',()=>{
