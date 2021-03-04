@@ -11,8 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     container: cypress/included:3.8.3
     steps:
-      - uses: actions/checkout@v1
-      - run: cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js 
-      - run: cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js 
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Chrome browser tests
+        run: npx cypress run --browser chrome --spec ./cypress/integration/basicTests.js
+    
+      - name: Firefox browser tests
+        run: npx cypress run --browser firefox --spec ./cypress/integration/basicTests.js
 
       

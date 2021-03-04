@@ -150,7 +150,8 @@ describe('bible-search-tests',()=>{
     })
 
     it('Each meaning with synonym and a number of Appearances',()=>{
-        cy.hebrewSearchRun({text:'שיר השירים'})
+        cy.hebrewSearchRun({text:'שיר השירים',page:'Start'})
+        cy.removeTaamim()
         cy.showMeaningsAndSynonyms()
         cy.synonymsTests() 
     })
@@ -234,30 +235,30 @@ describe('bible-search-tests',()=>{
         cy.existsInResult('דָּוִיד')
     })
 
-    it('Second person',()=>{
-        cy.hebrewSearchRun({text:'אֹתְכָה'})
-        cy.existsInResult('אֹותְךָ')
-    })
+    // it('Second person',()=>{
+    //     cy.hebrewSearchRun({text:'אֹתְכָה'})
+    //     cy.existsInResult('אֹותְךָ')
+    // })
 
     it('Second person',()=>{
         cy.hebrewSearchRun({text:'אֹותְךָ'})
         cy.existsInResult('אֹתְכָה')
     })
 
-    it('Second person, female',()=>{
-        cy.hebrewSearchRun({text:'גַּרְתָּה'})
-        cy.existsInResult('גַּרְתָּ')
-    })
+    // it('Second person, female',()=>{
+    //     cy.hebrewSearchRun({text:'גַּרְתָּה'})
+    //     cy.existsInResult('גַּרְתָּ')
+    // })
 
     it('Second person, female',()=>{
         cy.hebrewSearchRun({text:'גַּרְתָּ'})
         cy.existsInResult('גַּרְתָּה')
     })
 
-    it('Third person',()=>{
-        cy.hebrewSearchRun({text:'כֻּלֹּה'})
-        cy.existsInResult('כֻּלֹּו')
-    })
+    // it('Third person',()=>{
+    //     cy.hebrewSearchRun({text:'כֻּלֹּה'})
+    //     cy.existsInResult('כֻּלֹּו')
+    // })
 
     it('Third person',()=>{
         cy.hebrewSearchRun({text:'כֻּלֹּו'})
@@ -279,20 +280,20 @@ describe('bible-search-tests',()=>{
         cy.existsInResult('כָמֹכָה')
     })
 
-    it('Additional ה',()=>{
-        cy.hebrewSearchRun({text:'כָמֹכָה'})
-        cy.existsInResult('כָּמֹוךָ')
-    })
+    // it('Additional ה',()=>{
+    //     cy.hebrewSearchRun({text:'כָמֹכָה'})
+    //     cy.existsInResult('כָּמֹוךָ')
+    // })
 
     it('Interchangeable letters',()=>{
         cy.hebrewSearchRun({text:'ימלא'})
         cy.existsInResult('יְמַלֵּה') 
     })
 
-    it('Interchangeable letters',()=>{
-        cy.hebrewSearchRun({text:'יְמַלֵּה'})
-        cy.existsInResult('יִמָּלֵא')
-    })
+    // it('Interchangeable letters',()=>{
+    //     cy.hebrewSearchRun({text:'יְמַלֵּה'})
+    //     cy.existsInResult('יִמָּלֵא')
+    // })
 
     it('Interchangeable letters',()=>{
         cy.hebrewSearchRun({text:'וארסתיך'})

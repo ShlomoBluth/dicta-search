@@ -57,6 +57,11 @@ Cypress.Commands.add('meaningTest',()=>{
       cy.document().its('body').find('div.he').within(()=>{
         cy.get('[class*="loader"]').should('not.exist')
         cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
+          for(let i=0;i<meaningsAndSynonymsMatrix.length;i++){
+            for(let j=0;j<meaningsAndSynonymsMatrix[i].length;j++){
+              cy.log(meaningsAndSynonymsMatrix[i][j]+' '+i)
+            }
+          }
           cy.resultPagination({
             tests:'selectedMeaningsAndSynonyms',
             data:meaningsAndSynonymsMatrix,
@@ -195,6 +200,7 @@ Cypress.Commands.add('ResultsOfSelectedMeaningsAndSynonyms',(result,selectedMean
   
 Cypress.Commands.add('selectSynonym',(synonym)=>{
     cy.get('[class*="switch-text"]').contains(synonym).click({force:true})
+    cy.get('[class*="loader"]').should('not.exist')
     cy.get('[class*="switch-text"]').contains(synonym).siblings('[class="slider round"]')
     .should('have.css', 'background-color', 'rgb(0, 126, 229)')
 })
