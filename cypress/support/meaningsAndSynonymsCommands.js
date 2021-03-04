@@ -201,7 +201,7 @@ Cypress.Commands.add('ResultsOfSelectedMeaningsAndSynonyms',(result,selectedMean
 Cypress.Commands.add('selectSynonym',(synonym)=>{
     cy.get('[class*="switch-text"]').contains(synonym).click({force:true})
     cy.get('[class*="loader"]').should('not.exist')
-    cy.get('[class*="switch-text"]').contains(synonym).siblings('[class="slider round"]')
+    cy.get('[class*="switch-text"]').contains(synonym).siblings('[class="slider round"]',{timeout:50000})
     .should('have.css', 'background-color', 'rgb(0, 126, 229)')
 })
 
