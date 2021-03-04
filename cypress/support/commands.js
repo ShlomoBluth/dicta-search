@@ -112,8 +112,7 @@ Cypress.Commands.add('resultList',(tests,data,textNumbers)=>{
     }else if(tests=='wordFormsConsecutive'){
       cy.resultContainsConsecutiveWordsForm(data,result) 
     }else if(tests=='specific search'){
-      let specificArr={data}
-      cy.resultContainsWordsForm(data,result)
+      cy.resultContainsSpecificWord(data,result)
     }else if(tests=='books'){
       cy.resultFromBooks(data,result)
     } else if(tests=='meaningsMaps'){
@@ -350,6 +349,32 @@ Cypress.Commands.add('existsInPageResult',(text)=>{
     })
   }).then(()=>{
     return exists
+  })
+})
+
+Cypress.Commands.add('resultContainsSpecificWord',(word,result)=>{
+  let wordInResults
+  let hasSpecificWord=false
+  cy.get(result).within(()=>{
+    //Each bold word in result
+    cy.get('b').each($b=>{
+      if($b.text().charAt(0)=='['||$b.text().charAt(0)=='('){
+        wordInResults=$b.text().substring(1,$b.text().length-1)
+      }else if($b.text().charAt($b.text().length)=='־'||
+      $b.text().charAt($b.text().length)=='-'){
+        wordInResults=$b.text().substring(0,$b.text().length-1)
+      }else if($b.text().charAt(0)=='־'||$b.text().charAt(0)=='-'){
+        wordInResults=$b.text().substring(1)
+      }else{
+        wordInResults=$b.text().trim()
+      }
+      if(word==wordInResults){
+        hasSpecificWord=true
+      }
+    }).then(()=>{
+      //cy.log(wordInResults)
+      expect(hasSpecificWord).to.be.true
+    })
   })
 })
 
