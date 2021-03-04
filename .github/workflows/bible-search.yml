@@ -12,7 +12,7 @@ jobs:
     container: cypress/included:3.8.3
     steps:
       - uses: actions/checkout@v1
-      - run: cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js
-      - run: cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js
+      - run: cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js --record --key f015ae7b-ed3d-4a35-a648-8c1428f03e3c
+      - run: cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js --record --key f015ae7b-ed3d-4a35-a648-8c1428f03e3c
 
       
