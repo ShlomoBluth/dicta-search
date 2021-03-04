@@ -1,6 +1,5 @@
 {
     "projectId": "y4wdqf",
     "screenshotOnRunFailure": false,
-    "defaultCommandTimeout": 20000,
-    "numTestsKeptInMemory": 0
+    "defaultCommandTimeout": 20000
 }
