@@ -42,7 +42,13 @@ Cypress.Commands.add('eachMeaningTests',()=>{
           //Each meaning in the list
           cy.get('span[class="f-narkis"]').parent().each($meaning=>{
             cy.get($meaning).parent().within(()=>{
+              let num
               cy.get('[type="checkbox"]').check({force: true})
+              cy.nomberOfResults().then(nomOfRes=>{
+                num=nomOfRes
+              }).then(()=>{
+                cy.get('[class="text-numbers"]').should('contain',num)
+              })
               cy.get('[type="checkbox"]').should('be.checked')
               cy.loaderNotExist()
             }).then(()=>{
@@ -228,15 +234,9 @@ Cypress.Commands.add('selectSynonym',(synonym)=>{
 })
 
 Cypress.Commands.add('getTextNumbers',()=>{
-  let textNumbers
-  let num
-  cy.nomberOfResults().then(numOfRes=>{
-    num=numOfRes
-  }).then(()=>{
-    cy.get('[class="text-numbers"]').then($textNumbers=>{
-      cy.get($textNumbers).should('contain',num).then(()=>{
-        textNumbers=parseInt($textNumbers.text().substring(1,$textNumbers.text().length-1))
-      })
+  cy.get('[class="text-numbers"]').then($textNumbers=>{
+    cy.get($textNumbers).should('contain',num).then(()=>{
+      textNumbers=parseInt($textNumbers.text().substring(1,$textNumbers.text().length-1))
     })
   }).then(()=>{
     return textNumbers
