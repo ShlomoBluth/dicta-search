@@ -261,13 +261,16 @@ Cypress.Commands.add('loaderNotExist',()=>{
 Cypress.Commands.add('nomberOfResults',()=>{
   let number
   cy.document().its('body').find('div.he').within($body=>{
-    if($body.find('.result-list').length>0){
-      cy.get('.f > span > :nth-child(2)').then(num=>{
-        number=num.text().substring(2,num.text().length-2)
-      })
-    }else{
-      number=0
-    }
+    cy.loaderNotExist().then(()=>{
+      if($body.find('.result-list').length>0){
+        cy.get('.f > span > :nth-child(2)').then(num=>{
+          cy.log(num.text())
+          number=num.text().substring(2,num.text().length-2)
+        })
+      }else{
+        number=0
+      }
+    })
   }).then(()=>{
     return number
   })
