@@ -34,7 +34,7 @@ Cypress.Commands.add('hebrewSearchRun',({text,page=''})=>{
     cy.get('button[id="mobile_search_button"]').click({force:true})
   }else{
     cy.get('span[class*="inner-header-logo-title"]').should('contain','חיפוש בתנ"ך')
-    cy.get('input[class*="search-form-control"]').clear({force:true}).type(text)
+    cy.get('input[class*="search-form-control"]').clear({force:true}).type(text,{force:true})
     cy.get('[class*="fa-search text"]').click({force:true})
   }
   cy.get('[class*="loader"]').should('not.exist')
@@ -308,7 +308,7 @@ Cypress.Commands.add('titleMeaningsOfAWord',()=>{
 
 
  Cypress.Commands.add('lastPage',()=>{
-  cy.get('[class*="pagination__item"]').last().then($lastPage=>{
+  cy.get('[class*="pagination__item"]',{timeout:60000}).last().then($lastPage=>{
     return parseInt($lastPage.text())
   })
 })
