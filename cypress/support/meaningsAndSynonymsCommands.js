@@ -234,6 +234,7 @@ Cypress.Commands.add('selectSynonym',(synonym)=>{
 })
 
 Cypress.Commands.add('getTextNumbers',()=>{
+  let textNumbers
   cy.get('[class="text-numbers"]').then($textNumbers=>{
     cy.get($textNumbers).should('not.contain','()').then(()=>{
       textNumbers=parseInt($textNumbers.text().substring(1,$textNumbers.text().length-1))
