@@ -34,16 +34,34 @@ Cypress.Commands.add('eachMeaningTests',()=>{
       cy.get($wordMeanings).within($meanings=>{
         //if list have more than 1 meaning
         if($meanings.find('[class*=selectAll]').length>0){
-          cy.get('[class*=selectAll]').click()
-          //Each word in the list
-          cy.get('span[class="f-narkis"]').parent().each($meaning=>{
-            cy.get($meaning).click()
-            cy.get($meaning).within(()=>{
-              cy.meaningTest()
-            })
-            cy.get($meaning).click()
+          cy.get('[class*=selectAll]').within(()=>{
+            cy.get('[type="checkbox"]').uncheck({force: true})
+            cy.get('[type="checkbox"]').should('not.be.checked')
+            cy.loaderNotExist()
           })
-          cy.get('[class*=selectAll]').click()
+          //Each meaning in the list
+          cy.get('span[class="f-narkis"]').parent().each($meaning=>{
+            cy.get($meaning).parent().within(()=>{
+              cy.get('[type="checkbox"]').check({force: true})
+              cy.get('[type="checkbox"]').should('be.checked')
+              cy.loaderNotExist()
+            }).then(()=>{
+              cy.get($meaning).within(()=>{
+                cy.meaningTest()
+              })
+            }).then(()=>{
+              cy.get($meaning).parent().within(()=>{
+                cy.get('[type="checkbox"]').uncheck({force: true})
+                cy.get('[type="checkbox"]').should('not.be.checked')
+                cy.loaderNotExist()
+              })
+            })
+          })
+          cy.get('[class*=selectAll]').within(()=>{
+            cy.get('[type="checkbox"]').check({force: true})
+            cy.get('[type="checkbox"]').should('be.checked')
+            cy.loaderNotExist()
+          })
         }else{
           cy.meaningTest()
         }
@@ -62,6 +80,7 @@ Cypress.Commands.add('meaningTest',()=>{
               cy.log(meaningsAndSynonymsMatrix[i][j]+' '+i)
             }
           }
+          cy.log(textNumbers+' textNumbers')
           cy.resultPagination({
             tests:'selectedMeaningsAndSynonyms',
             data:meaningsAndSynonymsMatrix,
@@ -105,9 +124,9 @@ Cypress.Commands.add('selectedMeaningWithSynonymArr',(wordMeaning)=>{
     cy.get(wordMeaning).within($meaning=>{
       //if meaning has checkbox
       if($meaning.find('[class*="checkbox-indicator"]').length>0){
-        cy.get('[class*="checkbox-indicator"]').then($checkbox=>{
+        cy.get('[class*="narkis-offset"]').children('[type="checkbox"]').then($checkbox=>{
           //if selected
-          if($checkbox.css('background-color')!=='rgba(0, 0, 0, 0)'){
+          if($checkbox.prop('checked')){
             cy.getWordInAList().then(word=>{
               meaningArr.push(word)
             })
@@ -136,9 +155,9 @@ Cypress.Commands.add('selectedSynonymArr',(meaning)=>{
     cy.get(meaning).then(()=>{
       //if has synonyms
       if(meaning.find('[class="slider round"]').length>0){
-        cy.get('[class="slider round"]').each($synonym=>{
+        cy.get('[class="slider round"]').siblings('[type="checkbox"]').each($synonym=>{
           //if synonyms selected
-          if($synonym.css('background-color')!=='rgb(225, 225, 225)'){
+          if($synonym.prop('checked')){
             cy.get($synonym).siblings('[class*="switch-text"]').then(text=>{
               synonyms.push(text.text())
             })
@@ -165,7 +184,7 @@ Cypress.Commands.add('getResultListOfMeanings',($res)=>{
 
 Cypress.Commands.add('getVerseListMeanings',($listCollapseBtn)=>{
   let verseLlistMeanings=new Array()
-  //cy.wait(1000)
+  //cy.wait(100)
   cy.get($listCollapseBtn).click({force: true})  
   cy.get('[class="description-text"]').each($descriptionText=>{
     cy.get($descriptionText).then(text=>{
@@ -199,17 +218,25 @@ Cypress.Commands.add('ResultsOfSelectedMeaningsAndSynonyms',(result,selectedMean
 })
   
 Cypress.Commands.add('selectSynonym',(synonym)=>{
-    cy.get('[class*="switch-text"]').contains(synonym).click({force:true})
-    cy.get('[class*="loader"]').should('not.exist')
-    cy.get('[class*="switch-text"]').contains(synonym).siblings('[class="slider round"]'
-    ,{timeout:90000}).should('have.css', 'background-color', 'rgb(0, 126, 229)')
+  cy.get('[class*="switch-text"]').contains(synonym).siblings('[type="checkbox"]')
+  .should('not.be.checked')
+  cy.get('[class*="switch-text"]').contains(synonym).siblings('[type="checkbox"]')
+  .check({force: true})
+  cy.get('[class*="switch-text"]').contains(synonym).siblings('[type="checkbox"]')
+  .should('be.checked')
+  cy.loaderNotExist()
 })
 
 Cypress.Commands.add('getTextNumbers',()=>{
   let textNumbers
-  cy.get('[class="text-numbers"]').then($textNumbers=>{
-    cy.get($textNumbers).should('not.contain','()').then(()=>{
-      textNumbers=parseInt($textNumbers.text().substring(1,$textNumbers.text().length-1))
+  let num
+  cy.nomberOfResults().then(numOfRes=>{
+    num=numOfRes
+  }).then(()=>{
+    cy.get('[class="text-numbers"]').then($textNumbers=>{
+      cy.get($textNumbers).should('contain',num).then(()=>{
+        textNumbers=parseInt($textNumbers.text().substring(1,$textNumbers.text().length-1))
+      })
     })
   }).then(()=>{
     return textNumbers
@@ -221,5 +248,26 @@ Cypress.Commands.add('getWordInAList',()=>{
   cy.get('[class="f-narkis"]').then($word=>{
     word=$word.text().substring(0,$word.text().length-1)
     return word
+  })
+})
+
+Cypress.Commands.add('loaderNotExist',()=>{
+  cy.document().its('body').find('div.he').within(()=>{
+    cy.get('[class*="loader"]').should('not.exist')
+  })
+})
+
+Cypress.Commands.add('nomberOfResults',()=>{
+  let number
+  cy.document().its('body').find('div.he').within($body=>{
+    if($body.find('.result-list').length>0){
+      cy.get('.f > span > :nth-child(2)').then(num=>{
+        number=num.text().substring(2,num.text().length-2)
+      })
+    }else{
+      number=0
+    }
+  }).then(()=>{
+    return number
   })
 })

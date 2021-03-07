@@ -271,12 +271,12 @@ Cypress.Commands.add('synonymsTests',()=>{
     cy.get($wordMeanings).within($synonyms=>{
       if($synonyms.find('[class="switch"]').length>0){
         cy.get('[class="switch"]').each($synonym=>{
-          cy.get($synonym).click()
+          cy.get($synonym).children('[type="checkbox"]').check({force: true})
           cy.get('[class*="loader"]').should('not.exist')
           cy.document().its('body').find('div.he').within(()=>{
             cy.eachMeaningTests()
           })
-          cy.get($synonym).click()
+          cy.get($synonym).children('[type="checkbox"]').uncheck({force: true})
         })
       }     
     })
