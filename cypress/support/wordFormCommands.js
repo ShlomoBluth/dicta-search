@@ -24,18 +24,21 @@ Cypress.Commands.add('closeAllWordForms',()=>{
         cy.get($accordionLi).then(()=>{
             if($accordionLi.find('.morebtn').length>0){
                 cy.get($accordionLi).within(()=>{
-                    cy.get('.morebtn').click()
+                    cy.get('i').click({force:true})
                 })
             }
         }).then(()=>{
             //More than 1 word in search
             if($accordionLi.find('[class="inner-accordion-link"]').length>0){
-                //Close the list of word form of a word
-                cy.get($accordionLi).click()
+                //Close the list of words form of a word
+                cy.get($accordionLi).click({force:true})
             }
         })
     })
     cy.get('[id="word_forms"] > span').click()
+    cy.get('[id="word_forms"]').should('have.attr','class','f black link')
+    cy.get('[class="inner-accordion-link"]').should('not.exist')
+    cy.clearInput()
 })
 
 Cypress.Commands.add('eachSelectedWordFormMatrix',()=>{
@@ -99,7 +102,6 @@ Cypress.Commands.add('wordFormsWithNumberOfAppearances',()=>{
                                 cy.document().its('body').find('div.he').within(()=>{
                                     cy.eachSelectedWordFormMatrix().
                                     then(selectedWordFormMatrix=>{
-                                        expect(selectedWordFormMatrix[0].length).eq(1)
                                         cy.resultPagination({
                                             tests:'wordForms',
                                             data:selectedWordFormMatrix,
@@ -153,7 +155,8 @@ Cypress.Commands.add('resultContainsConsecutiveWordsForm',(wordFormsArray,result
             break  
         }
     }
-    expect(hasWordForm).eq(true)
+    cy.wrap(hasWordForm).should('eq',true)
+    // expect(hasWordForm).eq(true)
 })
 
 Cypress.Commands.add('resultContainsWordsForm',(wordFormsArray,result)=>{

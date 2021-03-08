@@ -41,7 +41,7 @@ Cypress.Commands.add('hebrewSearchRun',({text,page=''})=>{
 })
 
 Cypress.Commands.add('clearInput',()=>{
-  cy.get('input[class*="search-form-control"]').clear()
+  cy.get('input[class*="search-form-control"]').clear({force:true})
   cy.get('[class*="fa-search text"]').click({force:true})
 })
 
@@ -150,7 +150,7 @@ Cypress.Commands.add('resultPagination',({tests='',data,textNumbers})=>{
     }).then(()=>{
        //Loop through each page
       for(let i=2;i<=numberOfPages;i++){    
-        cy.get('ul[class="pagination"] > li').last().click()
+        cy.get('ul[class="pagination"] > li').last().children('button').click({force: true})
         cy.resultList(tests,data,textNumbers).then(res=>{
           numOfResults=numOfResults+res[0]
           textNumbers=res[1]

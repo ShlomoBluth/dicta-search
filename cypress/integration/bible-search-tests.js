@@ -13,7 +13,7 @@ describe('bible-search-tests',()=>{
     afterEach(() => {
         cy.get('a[id="meanings_and_synonyms"]').then($meaningsAndSynonyms=>{
             if($meaningsAndSynonyms.attr('class').includes('active')){
-                cy.clearInput() 
+                cy.closeMeaningsAndSynonyms() 
             }
         })
         cy.get('a[id="word_forms"]').then($wordForm=>{
@@ -47,14 +47,12 @@ describe('bible-search-tests',()=>{
     it('Remove word form',()=>{
         cy.hebrewSearchRun({text:'יום השישי'})
         cy.showAllWordForms()
-        cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-            expect(parseInt($numberOfResults.text())).to.eq(12)
+        cy.get('.f > span > :nth-child(2)').should('contain',12)
+        cy.get('li').contains('בַּיֹּום').within(()=>{
+            cy.get('[type="checkbox"]').uncheck({force: true})
         })
-        cy.contains('בַּיֹּום').click()
         cy.get('[class*="loader"]').should('not.exist')
-        cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-            expect(parseInt($numberOfResults.text())).to.eq(11)
-        })
+        cy.get('.f > span > :nth-child(2)').should('contain',11)
         cy.eachSelectedWordFormMatrix().then(selectedWordFormMatrix=>{
             expect(selectedWordFormMatrix[0].length).eq(11)
             expect(selectedWordFormMatrix[1].length).eq(2)
@@ -63,13 +61,15 @@ describe('bible-search-tests',()=>{
                 data:selectedWordFormMatrix
             })
         })
-        cy.contains('יָמִים').click()
+        cy.get('li').contains('בַּיֹּום').within(()=>{
+            cy.get('[type="checkbox"]').check({force: true})
+        })
     })
         
        
     
     it('Each word form with number of Appearances',()=>{
-        cy.hebrewSearchRun({text:'אריה'})
+        cy.hebrewSearchRun({text:'צבי'})
         cy.showAllWordForms()
         cy.wordFormsWithNumberOfAppearances()
     })
@@ -144,15 +144,15 @@ describe('bible-search-tests',()=>{
     })
 
     it('Each meaning with number of Appearances',()=>{
-        cy.hebrewSearchRun({text:'יום השישי'})
+        cy.hebrewSearchRun({text:'הבל הבלים'})
         cy.showMeaningsAndSynonyms()
         cy.eachMeaningTests() 
     })
 
     it('Each meaning with synonym and a number of Appearances',()=>{
-        cy.hebrewSearchRun({text:'שיר השירים'})
+        cy.hebrewSearchRun({text:'הבל הבלים'})
         cy.showMeaningsAndSynonyms()
-        cy.synonymsTests() 
+        cy.synonymsTests()
     })
 
     it('Meaning with synonyms',()=>{

@@ -12,6 +12,7 @@ Cypress.Commands.add('closeBooks',()=>{
         cy.get($link).click()
     })
     cy.get('#books').click()
+    cy.clearInput()
 })
 
 Cypress.Commands.add('selectedBooksMap',()=>{

@@ -8,8 +8,8 @@ Cypress.Commands.add('showMeaningsAndSynonyms',()=>{
   cy.get('body').within($body=>{
     //Open each word in the search list of meanings
     if($body.find('[class="inner-accordion-link"]').length>0){
-      cy.get('[class="inner-accordion-link"]').each($synonyms=>{
-        cy.get($synonyms).click()
+      cy.get('[class="inner-accordion-link"]').each($meaning=>{
+        cy.get($meaning).click()
       })
     }
   }).then(()=>{
@@ -25,6 +25,35 @@ Cypress.Commands.add('showMeaningsAndSynonyms',()=>{
         }
       })
     })
+  })
+})
+
+Cypress.Commands.add('closeMeaningsAndSynonyms',()=>{
+  cy.get('body').within($body=>{
+    //Close Synonyms
+    if($body.find('[class*=expand-area-text]').length>0){
+      cy.get('[class*=expand-area-text]').click({multiple:true})
+    }
+  }).then(()=>{
+    cy.get('body').within($body=>{
+      if($body.find('[class="morebtn"]').length>0){
+        cy.get('[class="morebtn"]').click({multiple:true})
+      }
+    })
+  }).then(()=>{
+    cy.get('body').within($body=>{
+      //Close each word in the search list of meanings
+      if($body.find('[class="inner-accordion-link"]').length>0){
+        cy.get('[class="inner-accordion-link"]').each($meaning=>{
+          cy.get($meaning).click()
+        })
+      }
+    })
+  })
+  cy.get('#meanings_and_synonyms').then(elem=>{
+    if(!elem.attr("class").includes('active')){
+      cy.get('#meanings_and_synonyms > span').click()
+    }
   })
 })
 
@@ -81,12 +110,6 @@ Cypress.Commands.add('meaningTest',()=>{
       cy.document().its('body').find('div.he').within(()=>{
         cy.get('[class*="loader"]').should('not.exist')
         cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
-          for(let i=0;i<meaningsAndSynonymsMatrix.length;i++){
-            for(let j=0;j<meaningsAndSynonymsMatrix[i].length;j++){
-              cy.log(meaningsAndSynonymsMatrix[i][j]+' '+i)
-            }
-          }
-          cy.log(textNumbers+' textNumbers')
           cy.resultPagination({
             tests:'selectedMeaningsAndSynonyms',
             data:meaningsAndSynonymsMatrix,
