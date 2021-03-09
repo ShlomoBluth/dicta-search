@@ -183,7 +183,10 @@ describe('bible-search-tests',()=>{
     it('remove Meaning',()=>{
         cy.hebrewSearchRun({text:'אריה'})
         cy.showMeaningsAndSynonyms()
-        cy.get('p').contains('אֲרִי').click().then(()=>{
+        cy.get('li[class="slide-li"]').contains('אֲרִי').within(()=>{
+            cy.get('[type="checkbox"]').uncheck({force: true})
+            cy.get('[type="checkbox"]').should('not.be.checked')
+        }).then(()=>{
             cy.get('[class*="loader"]').should('not.exist')
             cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
                 cy.resultPagination({
