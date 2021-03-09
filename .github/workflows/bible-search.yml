@@ -15,9 +15,8 @@ jobs:
         uses: actions/checkout@master
 
       - name: Chrome browser tests
-        run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js --record --key f015ae7b-ed3d-4a35-a648-8c1428f03e3c
+        run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js 
     
       - name: Firefox browser tests
-        run: npx cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js --record --key f015ae7b-ed3d-4a35-a648-8c1428f03e3c
-
+        run: npx cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js 
       
