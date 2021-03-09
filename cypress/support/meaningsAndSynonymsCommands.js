@@ -1,5 +1,6 @@
 Cypress.Commands.add('showMeaningsAndSynonyms',()=>{
   cy.contains('טוען נתונים').should('not.exist')
+  cy.contains('0 משמעויות נבחרו').should('not.exist')
   cy.get('#meanings_and_synonyms').then(elem=>{
     if(!elem.attr("class").includes('active')){
       cy.get('#meanings_and_synonyms > span').click()
