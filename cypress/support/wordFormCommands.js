@@ -9,6 +9,7 @@ Cypress.Commands.add('showAllWordForms',()=>{
                 cy.get($accordionLi).click()
             }
         }).then(()=>{
+            //More word form
             if($accordionLi.find('.morebtn').length>0){
                 cy.get($accordionLi).within(()=>{
                     cy.get('.morebtn').click()
@@ -22,6 +23,7 @@ Cypress.Commands.add('closeAllWordForms',()=>{
     //Each word in search
     cy.get('[class="inner-accordion"] > li').each($accordionLi=>{
         cy.get($accordionLi).then(()=>{
+            //More word form
             if($accordionLi.find('.morebtn').length>0){
                 cy.get($accordionLi).within(()=>{
                     cy.get('i').click({force:true})
@@ -63,11 +65,12 @@ Cypress.Commands.add('selectedWordFormArr',()=>{
             return false
         }
         cy.get($wordForm).within(()=>{
+            //The number of results that contain the word form
             cy.getTextNumbers().then(textMumbers=>{
                 if(textMumbers!=0){
-                    cy.get('[class*="checkbox-indicator"]').then($checkbox=>{
+                    cy.get('[type="checkbox"]').then($checkbox=>{
                         //if selected
-                        if($checkbox.css('background-color')!=='rgba(0, 0, 0, 0)'){
+                        if($checkbox.prop('checked')){
                             cy.getWordform().then(word=>{
                                 wordFormsArr.push(word)
                             })
@@ -94,6 +97,7 @@ Cypress.Commands.add('wordFormsWithNumberOfAppearances',()=>{
                 //Each word form
                 cy.get('[class="slide-li"]').each($wordForm=>{
                     cy.get($wordForm).within(()=>{
+                        //The number of results that contain the word form
                         cy.getTextNumbers().then($textNum=>{
                             if($textNum==0){
                                 return false
@@ -127,15 +131,18 @@ Cypress.Commands.add('wordFormsWithNumberOfAppearances',()=>{
 })
 
 Cypress.Commands.add('consecutiveWordsFormsArray',()=>{
-    let wordFormsArray=[]
     let temp
     let consecutiveWordFormsArray
+    //All selected words form
     cy.eachSelectedWordFormMatrix().then(wordFormsArray=>{
       temp=wordFormsArray[0]
+      //Loop through words in the search
       for(let i=1;i<wordFormsArray.length;i++){
         consecutiveWordFormsArray=[] 
+        //Loop through selected words form of evry word in the search
         for (let j=0;j<wordFormsArray[i].length;j++){
-          for(let k=0;k<temp.length;k++){
+          //Add all words forms  
+          for(let k=0;k<temp.length;k++){ 
             consecutiveWordFormsArray.push(temp[k]+' '
             +wordFormsArray[i][j])
           }
@@ -156,7 +163,6 @@ Cypress.Commands.add('resultContainsConsecutiveWordsForm',(wordFormsArray,result
         }
     }
     cy.wrap(hasWordForm).should('eq',true)
-    // expect(hasWordForm).eq(true)
 })
 
 Cypress.Commands.add('resultContainsWordsForm',(wordFormsArray,result)=>{
@@ -178,10 +184,12 @@ Cypress.Commands.add('resultContainsWordsForm',(wordFormsArray,result)=>{
         })
     }).then(()=>{
         let hasWordForm=false
+        //Loop through words form
         for(let i=0;i<wordFormsArray.length;i++){
             hasWordForm=false
             for (let j=0;j<wordFormsArray[i].length;j++){
                 let wordForm=boldWordsList.find(x=>x===wordFormsArray[i][j])
+                //If the word form was found in the list of bold words in the result
                 if(wordForm==wordFormsArray[i][j]){
                     expect(wordForm).eq(wordFormsArray[i][j])
                     hasWordForm=true

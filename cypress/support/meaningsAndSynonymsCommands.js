@@ -74,6 +74,7 @@ Cypress.Commands.add('eachMeaningTests',()=>{
             cy.get($meaning).parent().within(()=>{
               let num
               cy.get('[type="checkbox"]').check({force: true})
+              //Number of results on the top
               cy.nomberOfResults().then(nomOfRes=>{
                 num=nomOfRes
               }).then(()=>{
@@ -86,6 +87,7 @@ Cypress.Commands.add('eachMeaningTests',()=>{
                 cy.meaningTest()
               })
             }).then(()=>{
+              //Uncheck meaning
               cy.get($meaning).parent().within(()=>{
                 cy.get('[type="checkbox"]').uncheck({force: true})
                 cy.get('[type="checkbox"]').should('not.be.checked')
@@ -157,8 +159,12 @@ Cypress.Commands.add('selectedMeaningWithSynonymArr',(wordMeaning)=>{
         cy.get('[class*="narkis-offset"]').children('[type="checkbox"]').then($checkbox=>{
           //if selected
           if($checkbox.prop('checked')){
-            cy.getWordInAList().then(word=>{
-              meaningArr.push(word)
+            cy.getTextNumbers().then(textNumbers=>{
+              if(textNumbers!=0){
+                cy.getWordInAList().then(word=>{
+                  meaningArr.push(word)
+                })
+              }
             })
           }
         })
@@ -214,8 +220,8 @@ Cypress.Commands.add('getResultListOfMeanings',($res)=>{
 
 Cypress.Commands.add('getVerseListMeanings',($listCollapseBtn)=>{
   let verseLlistMeanings=new Array()
-  //cy.wait(100)
-  cy.get($listCollapseBtn).click({force: true})  
+  cy.get($listCollapseBtn).click({force: true})
+  //Each meaning   
   cy.get('[class="description-text"]').each($descriptionText=>{
     cy.get($descriptionText).then(text=>{
       verseLlistMeanings.push(text.text().substring(0,text.text().indexOf('(')-2))
@@ -229,10 +235,13 @@ Cypress.Commands.add('getVerseListMeanings',($listCollapseBtn)=>{
 Cypress.Commands.add('ResultsOfSelectedMeaningsAndSynonyms',(result,selectedMeaningsAndSynonyms)=>{
     let hasMeanings  
     cy.getResultListOfMeanings(result).then(listMeanings=>{
+      //Loop through each word in search
       for(let i=0;i<selectedMeaningsAndSynonyms.length;i++){
         hasMeanings=false
+        //Loop through list of meaning and Synonym of the word
         for(let j=0;j<selectedMeaningsAndSynonyms[i].length;j++){
           let meaning=listMeanings.find(x=>x===selectedMeaningsAndSynonyms[i][j])
+          //If meaning or synonym found in results list of meanings
           if(meaning===selectedMeaningsAndSynonyms[i][j]){
             hasMeanings=true
             break
@@ -246,6 +255,27 @@ Cypress.Commands.add('ResultsOfSelectedMeaningsAndSynonyms',(result,selectedMean
       expect(hasMeanings).eq(true)
     })
 })
+
+Cypress.Commands.add('synonymsTests',()=>{
+  //Each word in search
+  cy.get('ul[class="inner-ul"]').each($wordMeanings=>{
+    //Synonym of the word in search
+    cy.get($wordMeanings).within($synonyms=>{
+      //If has synonyms
+      if($synonyms.find('[class="switch"]').length>0){
+        //Each synonym 
+        cy.get('[class="switch"]').each($synonym=>{
+          cy.get($synonym).children('[type="checkbox"]').check({force: true})
+          cy.get('[class*="loader"]').should('not.exist')
+          cy.document().its('body').find('div.he').within(()=>{
+            cy.eachMeaningTests()
+          })
+          cy.get($synonym).children('[type="checkbox"]').uncheck({force: true})
+        })
+      }     
+    })
+  })
+})
   
 Cypress.Commands.add('selectSynonym',(synonym)=>{
   cy.get('[class*="switch-text"]').contains(synonym).siblings('[type="checkbox"]')
@@ -257,17 +287,6 @@ Cypress.Commands.add('selectSynonym',(synonym)=>{
   cy.loaderNotExist()
 })
 
-Cypress.Commands.add('getTextNumbers',()=>{
-  let textNumbers
-  cy.get('[class="text-numbers"]').then($textNumbers=>{
-    cy.get($textNumbers).should('not.contain','()').then(()=>{
-      textNumbers=parseInt($textNumbers.text().substring(1,$textNumbers.text().length-1))
-    })
-  }).then(()=>{
-    return textNumbers
-  })
-})
-
 Cypress.Commands.add('getWordInAList',()=>{
   let word
   cy.get('[class="f-narkis"]').then($word=>{
@@ -276,26 +295,5 @@ Cypress.Commands.add('getWordInAList',()=>{
   })
 })
 
-Cypress.Commands.add('loaderNotExist',()=>{
-  cy.document().its('body').find('div.he').within(()=>{
-    cy.get('[class*="loader"]').should('not.exist')
-  })
-})
 
-Cypress.Commands.add('nomberOfResults',()=>{
-  let number
-  cy.document().its('body').find('div.he').within($body=>{
-    cy.loaderNotExist().then(()=>{
-      if($body.find('.result-list').length>0){
-        cy.get('.f > span > :nth-child(2)').then(num=>{
-          cy.log(num.text())
-          number=num.text().substring(2,num.text().length-2)
-        })
-      }else{
-        number=0
-      }
-    })
-  }).then(()=>{
-    return number
-  })
-})
+

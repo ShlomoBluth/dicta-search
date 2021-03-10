@@ -20,11 +20,12 @@ Cypress.Commands.add('selectedBooksMap',()=>{
     //Each book
     cy.get('[data-id="book_checkbox"]').each($book=>{
         cy.get($book).within(()=>{
+            //The number of results from the book
             cy.getTextNumbers().then(textMumbers=>{
                 if(textMumbers>0){
-                    cy.get('[class*="checkbox-indicator"]').then($checkbox=>{
+                    cy.get('[type="checkbox"]').then($checkbox=>{
                         //if selected
-                        if($checkbox.css('background-color')!=='rgba(0, 0, 0, 0)'){
+                        if($checkbox.prop('checked')){
                             cy.getBookName().then(name=>{
                                 books.set(name,textMumbers)
                             })
@@ -42,6 +43,7 @@ Cypress.Commands.add('selectedBooksMap',()=>{
 
 Cypress.Commands.add('resultFromBooks',(booksMap,result)=>{
     cy.get(result).within(()=>{
+        //result from book
         cy.get('.text-primary').then(book=>{
             for (let [key, value] of booksMap) {
                 if(book.text().includes(key)){
