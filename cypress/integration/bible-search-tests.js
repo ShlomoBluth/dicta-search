@@ -327,8 +327,8 @@ describe('bible-search-tests',()=>{
     it('Different ways the bible refers to G-d',()=>{
         cy.hebrewSearchRun({text:'א-להים'})
         cy.existsInResult('הָאֱלֹהִים')
-        cy.hebrewSearchRun({text:'ה\''})
-        cy.existsInResult('הָאֱלֹהִים')
+        // cy.hebrewSearchRun({text:'ה\''})
+        // cy.existsInResult('הָאֱלֹהִים')
     })
 
     it('Search with numbers',()=>{
