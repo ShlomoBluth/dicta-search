@@ -9,7 +9,7 @@ on:
 jobs:
   cross-browser:
     runs-on: ubuntu-latest
-    container: cypress/included:3.8.3
+    #container: cypress/included:3.8.3
     steps:
       - name: Checkout
         uses: actions/checkout@master
