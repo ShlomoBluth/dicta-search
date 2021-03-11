@@ -76,17 +76,6 @@ Cypress.Commands.add('searchRequest',({url,language,status=200,message='',delayS
 })
 
 
-// Cypress.Commands.add('resultForMeanings',(arrayOfMapsWithMeaningsNumbers,result)=>{
-//   for(let i=0;i<arrayOfMapsWithMeaningsNumbers.length;i++){
-//     for(let [key,value] of arrayOfMapsWithMeaningsNumbers[i]){
-//       if(result.text().replaceAll('‎','').includes(key)){
-//         arrayOfMapsWithMeaningsNumbers[i].set(key,value-1)
-//       }
-//     }
-//   }
-// })
-
-
 Cypress.Commands.add('resultList',(tests,data,textNumbers)=>{
   let res=[]
   //Number of result in the page
@@ -105,20 +94,6 @@ Cypress.Commands.add('resultList',(tests,data,textNumbers)=>{
     }else if(tests=='books'){
       cy.resultFromBooks(data,result)
     }
-    // else if(tests=='meaningsMaps'){
-    //   cy.get(result).within(()=>{
-    //     cy.get('a[class*="list-collapse-btn hidden-mobile-view"]').click({multiple: true })
-    //   })
-    //   cy.resultForMeanings(data,result)
-    // } 
-    // else if(tests=='synonym'){
-    // cy.get('[class*="loader"]').should('not.exist')
-    //   cy.getResultListOfMeanings(result).then(listMeanings=>{
-    //     cy.resultMeanings(data,listMeanings,textNumbers).then($res=>{
-    //       textNumbers=$res
-    //     })
-    //   })
-    // }
     else if(tests='selectedMeaningsAndSynonyms'){
       cy.ResultsOfSelectedMeaningsAndSynonyms(result,data)
     }
@@ -155,16 +130,6 @@ Cypress.Commands.add('resultPagination',({tests='',data,textNumbers})=>{
         expect(value).eq(0)
       }
     }
-    // if(tests=='meaningsMaps'){
-    //   for(let i=0;i<data.length;i++){
-    //     for(let [key,value] of data[i]){
-    //       expect(value).eq(0)
-    //     }
-    //   }
-    // }
-    // if(tests=='synonym'){
-    //   expect(textNumbers).eq(0)
-    // }
     if(textNumbers!==undefined){
       expect(textNumbers).eq(numOfResults)
     }
@@ -176,100 +141,6 @@ Cypress.Commands.add('resultPagination',({tests='',data,textNumbers})=>{
 
 
 
-
-
-// Cypress.Commands.add('getMeaning',()=>{
-//   let meaning
-//   cy.get('[class="f-narkis"]').siblings().not('[class="text-numbers"]').then(text=>{
-//     meaning=text.text()
-//   }).then(()=>{
-//     return meaning
-//   })
-// })
-
-
-
-// Cypress.Commands.add('resultMeanings',(meaningsAndSynonyms,listMeanings,textNumbers)=>{
-//   let meaning
-//   for (let i=0;i<meaningsAndSynonyms.length;i++) {
-//     meaning=listMeanings.find(x=>x.replaceAll('‎','').replaceAll(' ','')===meaningsAndSynonyms[i])
-//     if(meaning===meaningsAndSynonyms[i]){
-//       textNumbers=textNumbers-1
-//       break
-//     }
-//   }
-//   return textNumbers
-// })
-
-
-
-// Cypress.Commands.add('listOfWordsMeanings',(res)=>{
-//   let meanings=''
-//   cy.get(res).within(()=>{
-//     cy.get('a[class*="list-collapse-btn hidden-mobile-view"]').each($listCollapseBtn=>{
-//       cy.get($listCollapseBtn).click()
-//       cy.document().its('body').find('div.listing-wrapper').then(listMeanings=>{
-//         meanings=meanings+listMeanings.text()
-//       })
-//       cy.get($listCollapseBtn).click()
-//     }) 
-//   }).then(()=>{
-//     return meanings
-//   })
-// })
-
-
-
-
-// Cypress.Commands.add('runThrghouMeaning',(synonym)=>{
-//   let word
-//   let textNumbers
-//   cy.get('[class="slide-li"]').each($meaning=>{
-//     cy.meaningCheckbox($meaning)
-//     cy.get('[class*="loader"]').should('not.exist')
-//     let meaningsAndSynonyms=[]
-//     if(synonym!==undefined){
-//       meaningsAndSynonyms.push(synonym)
-//     }
-//     cy.get($meaning).within(()=>{
-//       cy.getWordInAList().then($word=>{
-//         word=$word
-//         cy.log($word)
-//       })
-//       cy.getTextNumbers().then($textNumbers=>{
-//         textNumbers=$textNumbers
-//         cy.log($textNumbers)
-//       })
-//     }).then(()=>{
-//       if(textNumbers>0){
-//         meaningsAndSynonyms.push(word)
-//       }
-//     }).then(()=>{
-//       if(textNumbers>0){
-//         cy.document().its('body').find('div.he').within(()=>{
-//           cy.resultPagination({tests:'synonym',data:meaningsAndSynonyms,textNumbers})
-//         })
-//       }
-//     })
-//     cy.meaningCheckbox($meaning)
-//   })
-// })
-
-
-
-// Cypress.Commands.add('meaningCheckbox',($meaning)=>{
-//   cy.get($meaning).within($checkbox=>{
-//     if($checkbox.find('[class*=chek-box-holder]').length>0){
-//       cy.get('[class*=chek-box-holder]').click()
-//     }
-//   })
-// })
-
-// Cypress.Commands.add('titleMeaningsOfAWord',()=>{
-//   cy.get('a[class*="inner-accordion-link"]').then($meanings=>{
-//     return $meanings.text()
-//   }) 
-// })
 
 
 
