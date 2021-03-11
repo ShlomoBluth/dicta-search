@@ -204,6 +204,9 @@ describe('bible-search-tests',()=>{
             cy.get('[type="checkbox"]').should('not.be.checked')
         }).then(()=>{
             cy.get('[class*="loader"]').should('not.exist')
+            cy.get('[class*="collapse-btn"]').first().click().then(()=>{
+                cy.get('[class="description-text"]').should('have.length',15)
+            })
             cy.wait(100).then(()=>{
                 cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
                     cy.resultPagination({
