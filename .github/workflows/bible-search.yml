@@ -15,9 +15,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: Chrome browser tests
-        run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js  
-        continue-on-error: true
+        run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js 
     
       - name: Firefox browser tests
         run: npx cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js
-        continue-on-error: true  

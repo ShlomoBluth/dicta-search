@@ -203,8 +203,8 @@ describe('bible-search-tests',()=>{
             cy.get('[type="checkbox"]').uncheck({force: true})
             cy.get('[type="checkbox"]').should('not.be.checked')
         }).then(()=>{
-            cy.get('[class*="loader"]').should('not.exist').then(()=>{
-            //cy.wait(100).then(()=>{
+            cy.get('[class*="loader"]').should('not.exist')
+            cy.wait(100).then(()=>{
                 cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
                     cy.resultPagination({
                         tests:'selectedMeaningsAndSynonyms',
