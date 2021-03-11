@@ -1,6 +1,13 @@
 {
     "projectId": "y4wdqf",
     "screenshotOnRunFailure": false,
-    "defaultCommandTimeout": 20000
-
+    "defaultCommandTimeout": 20000,
+    "reporter":"mochawesome",
+    "reporterOptions":{
+        "reportDir":"cypress/report/mochawesome-report",
+        "overwrite":false,
+        "timestamp":"mmddyyyy_HHMMss",
+        "json":false,
+        "html":true
+    }
 }
