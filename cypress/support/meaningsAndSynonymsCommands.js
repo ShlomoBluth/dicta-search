@@ -220,13 +220,20 @@ Cypress.Commands.add('getResultListOfMeanings',($res)=>{
 
 Cypress.Commands.add('getVerseListMeanings',($listCollapseBtn)=>{
   let verseLlistMeanings=new Array()
-  cy.get($listCollapseBtn).click({force: true})
-  //Each meaning   
+  cy.get($listCollapseBtn).click({force: true}).then(()=>{
+    //Each meaning   
   cy.get('[class="description-text"]').each($descriptionText=>{
     cy.get($descriptionText).then(text=>{
       verseLlistMeanings.push(text.text().substring(0,text.text().indexOf('(')-2))
     })
   })
+  })
+  // //Each meaning   
+  // cy.get('[class="description-text"]').each($descriptionText=>{
+  //   cy.get($descriptionText).then(text=>{
+  //     verseLlistMeanings.push(text.text().substring(0,text.text().indexOf('(')-2))
+  //   })
+  // }).pause()
   cy.get($listCollapseBtn).click({force: true}).then(()=>{
     return verseLlistMeanings
   })
