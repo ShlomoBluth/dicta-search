@@ -204,6 +204,7 @@ describe('bible-search-tests',()=>{
             cy.get('[type="checkbox"]').should('not.be.checked')
         }).then(()=>{
             cy.get('[class*="loader"]').should('not.exist')
+            //Check meanings update
             cy.get('[class*="collapse-btn"]').first().click().then(()=>{
                 cy.get('[class="description-text"]').should('have.length',15)
             })
