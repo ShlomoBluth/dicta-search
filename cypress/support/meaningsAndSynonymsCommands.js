@@ -221,7 +221,6 @@ Cypress.Commands.add('getResultListOfMeanings',($res)=>{
 Cypress.Commands.add('getVerseListMeanings',($listCollapseBtn)=>{
   let verseLlistMeanings=new Array()
   cy.get($listCollapseBtn).click({force: true})
-  cy.get('[class*="show last-analysis"]').should('exist')
   //Each meaning   
   cy.get('[class="description-text"]').each($descriptionText=>{
     cy.get($descriptionText).then(text=>{
