@@ -207,12 +207,11 @@ describe('bible-search-tests',()=>{
             cy.get('[class*="collapse-btn"]').first().click().then(()=>{
                 cy.get('[class="description-text"]').should('have.length',15)
             })
-            cy.wait(100).then(()=>{
-                cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
-                    cy.resultPagination({
-                        tests:'selectedMeaningsAndSynonyms',
-                        data:meaningsAndSynonymsMatrix
-                    })
+            cy.get('[class*="collapse-btn"]').first().click()
+            cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
+                cy.resultPagination({
+                    tests:'selectedMeaningsAndSynonyms',
+                    data:meaningsAndSynonymsMatrix
                 })
             })
         })       
