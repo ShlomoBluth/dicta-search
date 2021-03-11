@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: Chrome browser tests
-        run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js --reporter mochawesome --reporter mochawesome --reporter-options reportFilename=firefox,reportDir=cypress/report/mochawesome-report,overwrite=false,timestamp=mmddyyyy_HHMMss,json=false,html=true
+        run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js  --reporter mochawesome --reporter-options reportFilename=firefox,reportDir=cypress/report/mochawesome-report,overwrite=false,timestamp=mmddyyyy_HHMMss,json=false,html=true
     
       - name: Firefox browser tests
-        run: npx cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js --reporter mochawesome --reporter mochawesome --reporter-options reportFilename=firefox,reportDir=cypress/report/mochawesome-report,overwrite=false,timestamp=mmddyyyy_HHMMss,json=false,html=true
+        run: npx cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js  --reporter mochawesome --reporter-options reportFilename=firefox,reportDir=cypress/report/mochawesome-report,overwrite=false,timestamp=mmddyyyy_HHMMss,json=false,html=true
