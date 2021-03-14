@@ -1,6 +1,9 @@
 ///<reference types="cypress"/>
 
 
+const path = require('path')
+
+
 
 
 
@@ -340,6 +343,22 @@ describe('bible-search-tests',()=>{
         cy.existsInResult('וְעֶשְׂרִים')
         cy.existsInResult('וְשֶׁבַע')
     })
+
+    // const downloadsFolder = Cypress.config('downloadsFolder')
+
+    // it('Html download',()=>{
+    //     cy.hebrewSearchRun({text:'יום השישי',page:'Start'})
+    //     cy.exec(' npx rimraf cypress/downloads/*')
+    //     cy.removeTaamim()
+    //     cy.get('[class*="dropdown-toggle"]').contains('הורדה').click()
+    //     cy.get('p').contains('קובץ CSV').parent().within(()=>{
+    //         cy.get('[type="radio"]').check({force:true})
+    //     })
+    //     cy.get('[type="submit"]').click().then(()=>{
+    //         const filename = path.join(downloadsFolder, 'searchResults.csv')
+    //         cy.readFile(filename,{timeout:150000}).should('have.length',19)
+    //     })
+    // })
 
 
 
