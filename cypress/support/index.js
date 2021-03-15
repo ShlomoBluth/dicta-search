@@ -17,7 +17,7 @@
 import './commands'
 import './meaningsAndSynonymsCommands.js'
 import '../../searchShared/wordFormCommands.js'
-import './booksCommand.js'
+import '../../searchShared/booksCommand.js'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
