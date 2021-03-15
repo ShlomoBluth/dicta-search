@@ -12,7 +12,7 @@ jobs:
     #container: cypress/included:3.8.3
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v1
 
       - name: Chrome browser tests
         run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js 
