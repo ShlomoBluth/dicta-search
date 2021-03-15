@@ -1,0 +1,3 @@
+[submodule "searchShared"]
+	path = searchShared
+	url = https://github.com/ShlomoBluth/searchShared.git
