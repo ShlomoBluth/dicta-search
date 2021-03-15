@@ -16,7 +16,7 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 import './meaningsAndSynonymsCommands.js'
-import '../../searchShared/wordFormCommands'
+import '../../searchShared/wordFormCommands.js'
 import './booksCommand.js'
 
 // Alternatively you can use CommonJS syntax:
