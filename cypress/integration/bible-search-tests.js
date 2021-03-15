@@ -291,7 +291,7 @@ describe('bible-search-tests',()=>{
     // })
 
     it('Different suffixes third person that does not end with "ה"',()=>{
-        cy.hebrewSearchRun({text:'כֻּלֹּו'})
+        cy.hebrewSearchRun({text:'כֻּלֹּו',collection:'תנ"ך'})
         cy.existsInResult('כֻּלֹּה')
     })
 

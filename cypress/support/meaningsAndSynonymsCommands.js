@@ -110,7 +110,7 @@ Cypress.Commands.add('eachMeaningTests',()=>{
 Cypress.Commands.add('meaningTest',()=>{
   cy.getTextNumbers().then(textNumbers=>{
     if(textNumbers>0){
-      cy.document().its('body').find('div.he').within(()=>{
+      cy.document().its('body').find('#app').within(()=>{
         cy.get('[class*="loader"]').should('not.exist')
         cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
           cy.resultPagination({
@@ -226,7 +226,7 @@ Cypress.Commands.add('getVerseListMeanings',($listCollapseBtn)=>{
     cy.get($descriptionText).then(text=>{
       verseLlistMeanings.push(text.text().substring(0,text.text().indexOf('(')-2))
     })
-  }).pause()
+  })
   cy.get($listCollapseBtn).click({force: true}).then(()=>{
     return verseLlistMeanings
   })
@@ -267,7 +267,7 @@ Cypress.Commands.add('synonymsTests',()=>{
         cy.get('[class="switch"]').each($synonym=>{
           cy.get($synonym).children('[type="checkbox"]').check({force: true})
           cy.get('[class*="loader"]').should('not.exist')
-          cy.document().its('body').find('div.he').within(()=>{
+          cy.document().its('body').find('#app').within(()=>{
             cy.eachMeaningTests()
           })
           cy.get($synonym).children('[type="checkbox"]').uncheck({force: true})
