@@ -1,16 +1,16 @@
 Cypress.Commands.add('showMeaningsAndSynonyms',()=>{
-  cy.contains('טוען נתונים').should('not.exist')
+  cy.contains(/Loading|טוען נתונים/g).should('not.exist')
   cy.contains('0 משמעויות נבחרו').should('not.exist')
   cy.get('#meanings_and_synonyms').then(elem=>{
     if(!elem.attr("class").includes('active')){
-      cy.get('#meanings_and_synonyms > span').click()
+      cy.get('#meanings_and_synonyms > span').click({force:true})
     }
   })
   cy.get('body').within($body=>{
     //Open each word in the search list of meanings
     if($body.find('[class="inner-accordion-link"]').length>0){
       cy.get('[class="inner-accordion-link"]').each($meaning=>{
-        cy.get($meaning).click()
+        cy.get($meaning).click({force:true})
       })
     }
   }).then(()=>{
@@ -52,9 +52,11 @@ Cypress.Commands.add('closeMeaningsAndSynonyms',()=>{
     })
   })
   cy.get('#meanings_and_synonyms').then(elem=>{
-    if(!elem.attr("class").includes('active')){
-      cy.get('#meanings_and_synonyms > span').click()
+    if(elem.attr("class").includes('active')){
+      cy.get('#meanings_and_synonyms').click({force:true})
     }
+  }).then(()=>{
+    cy.get('#meanings_and_synonyms',{timeout:90000}).should('have.attr','class','f black link')
   })
 })
 

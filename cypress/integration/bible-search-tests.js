@@ -14,20 +14,26 @@ describe('bible-search-tests',()=>{
     })
 
     afterEach(() => {
-        cy.get('a[id="meanings_and_synonyms"]').then($meaningsAndSynonyms=>{
-            if($meaningsAndSynonyms.attr('class').includes('active')){
-                cy.closeMeaningsAndSynonyms() 
-            }
+        cy.get('a[id="meanings_and_synonyms"]').then(meaningsAndSynonyms=>{
+            cy.wrap(meaningsAndSynonyms).should('not.be.undefined').then(()=>{
+                if(meaningsAndSynonyms.attr('class').includes('active')){
+                    cy.closeMeaningsAndSynonyms() 
+                }
+            })
         })
-        cy.get('a[id="word_forms"]').then($wordForm=>{
-            if($wordForm.attr('class').includes('active')){
-                cy.closeAllWordForms()
-            }
+        cy.get('a[id="word_forms"]').then(wordForm=>{
+            cy.wrap(wordForm).should('not.be.undefined').then(()=>{
+                if(wordForm.attr('class').includes('active')){
+                    cy.closeAllWordForms()
+                }
+            })
         })
-        cy.get('a[id="books"]').then($books=>{
-            if($books.attr('class').includes('active')){
-                cy.closeBooks()
-            }
+        cy.get('a[id="books"]').then(books=>{
+            cy.wrap(books).should('not.be.undefined').then(()=>{
+                if(books.attr('class').includes('active')){
+                    cy.closeBooks()
+                }
+            })
         })
     })
 
