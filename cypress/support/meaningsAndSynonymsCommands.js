@@ -29,36 +29,6 @@ Cypress.Commands.add('showMeaningsAndSynonyms',()=>{
   })
 })
 
-Cypress.Commands.add('closeMeaningsAndSynonyms',()=>{
-  cy.get('body').within($body=>{
-    //Close Synonyms
-    if($body.find('[class*=expand-area-text]').length>0){
-      cy.get('[class*=expand-area-text]').click({multiple:true})
-    }
-  }).then(()=>{
-    cy.get('body').within($body=>{
-      if($body.find('[class="morebtn"]').length>0){
-        cy.get('[class="morebtn"]').click({multiple:true})
-      }
-    })
-  }).then(()=>{
-    cy.get('body').within($body=>{
-      //Close each word in the search list of meanings
-      if($body.find('[class="inner-accordion-link"]').length>0){
-        cy.get('[class="inner-accordion-link"]').each($meaning=>{
-          cy.get($meaning).click()
-        })
-      }
-    })
-  })
-  cy.get('#meanings_and_synonyms').then(elem=>{
-    if(elem.attr("class").includes('active')){
-      cy.get('#meanings_and_synonyms').click({force:true})
-    }
-  }).then(()=>{
-    cy.get('#meanings_and_synonyms',{timeout:90000}).should('have.attr','class','f black link')
-  })
-})
 
 Cypress.Commands.add('eachMeaningTests',()=>{
     //Each word in the search list of meanings

@@ -98,6 +98,20 @@ Cypress.Commands.add('resultContainsSpecificWord',(word,result)=>{
   })
 })
 
+Cypress.Commands.add('navigateToStartPage',()=>{
+  function firstPage(){
+    return cy.url().then(url=>{
+      if(url!=='https://use-dicta-components-2--cranky-banach-377068.netlify.app/'){
+        cy.go(-1)
+        return firstPage()
+      }else{
+        cy.url().should('eq','https://use-dicta-components-2--cranky-banach-377068.netlify.app/')
+      }
+    })
+  }
+  firstPage()
+})
+
 
 
 
