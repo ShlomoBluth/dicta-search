@@ -14,7 +14,7 @@ describe('bible-search-tests',()=>{
     })
 
     afterEach(() => {
-        cy.navigateToStartPage()
+        cy.navigateToStartPage('https://use-dicta-components-2--cranky-banach-377068.netlify.app/')
      })
 
     
