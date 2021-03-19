@@ -1,6 +1,5 @@
 {
     "projectId": "y4wdqf",
-    "screenshotOnRunFailure": false,
     "defaultCommandTimeout": 20000,
     "baseUrl":"https://use-dicta-components-2--cranky-banach-377068.netlify.app/"
 }

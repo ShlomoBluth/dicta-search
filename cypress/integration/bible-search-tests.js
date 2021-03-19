@@ -210,7 +210,7 @@ describe('bible-search-tests',()=>{
         })       
     })
 
-    
+    ///////////////////////////////////////////////////////////////////////////
 
 
     it('No meanings but there are synonyms',()=>{
@@ -237,7 +237,7 @@ describe('bible-search-tests',()=>{
         })
     })
 
-    
+    ////////////////////////////////////////////////////////////////////////
 
     it('Search with root words',()=>{
         cy.searchRun({text:'ברא',collection:'תנ"ך',language:'Hebrew'})
@@ -289,10 +289,22 @@ describe('bible-search-tests',()=>{
         cy.existsInResult('וְנִטְמֵתֶם')
     })
 
+    it('Search additional א and also get missing א results',()=>{
+        cy.searchRun({text:'מראשית',collection:'תנ"ך',language:'Hebrew'})
+        cy.existsInResult('מֵרֵשִׁית')
+    })
+
+
     it('Search missing א and also get additional א results',()=>{
         cy.searchRun({text:'ורציתי',collection:'תנ"ך',language:'Hebrew'})
         cy.existsInResult('וְרָצִאתִי')
     })
+
+    // it('Search missing א and also get additional א results',()=>{
+    //     cy.searchRun({text:'מֵרֵשִׁית',collection:'תנ"ך',language:'Hebrew'})
+    //     cy.existsInResult('מֵרֵאשִׁית')
+    // })
+
 
     it('Search missing ה and also get additional ה results',()=>{
         cy.searchRun({text:'כָּמֹוךָ',collection:'תנ"ך',language:'Hebrew'})
@@ -307,6 +319,11 @@ describe('bible-search-tests',()=>{
     it('Interchangeable letters',()=>{
         cy.searchRun({text:'ימלא',collection:'תנ"ך',language:'Hebrew'})
         cy.existsInResult('יְמַלֵּה') 
+    })
+
+    it('Interchangeable letters',()=>{
+        cy.searchRun({text:'חיטים',collection:'תנ"ך',language:'Hebrew'})
+        cy.existsInResult('חִטִּין') 
     })
 
     // it('Interchangeable letters',()=>{
