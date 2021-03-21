@@ -13,14 +13,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install a project with a clean slate
-      run: |
-        npm ci
-        $(npm bin)/cypress verify
+    #- name: Install a project with a clean slate
+      #run: |
+        #npm ci
+        #$(npm bin)/cypress verify
 
-    #- name: Run Cypress tests
-      #run: npm run test:chrome
-      #continue-on-error: false
+    - name: Run Cypress tests
+      run: npm run test:chrome
+      continue-on-error: false
 
     - name: Copy test execution videos 
       run: |
