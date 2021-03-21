@@ -21,9 +21,14 @@ jobs:
         npm ci
         $(npm bin)/cypress verify
 
-    - name: Run Cypress tests
-      run: npm run test:chrome
+    - name: Run chrome tests
+      run: cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js
       continue-on-error: false
+
+    - name: Run firefox tests
+      run: cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js
+      continue-on-error: false  
+
 
     - name: Copy test execution videos 
       run: |
