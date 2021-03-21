@@ -1,23 +1,60 @@
-name: Bible search Tests
+#name: Bible search Tests
 
-on: 
-  push
+#on: 
+  #push
   #schedule:
     # * is a special character in YAML so you have to quote this string
     #- cron:  '0 6,14,22 * * *'
 
-jobs:
-  cross-browser:
-    runs-on: ubuntu-latest
+#jobs:
+  #cross-browser:
+    #runs-on: ubuntu-latest
     #container: cypress/included:3.8.3
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-        with: 
-          submodules: true
+    #steps:
+      #- name: Checkout
+        #uses: actions/checkout@v1
+        #with: 
+          #submodules: true
 
-      - name: Chrome browser tests
-        run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js 
+      #- name: Chrome browser tests
+        #run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js 
     
-      - name: Firefox browser tests
-        run: npx cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js
+      #- name: Firefox browser tests
+        #run: npx cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js
+
+name: Create Cypress report
+on:
+  push:
+    branches:
+      - 'master'
+jobs:
+  cypress-e2e-chrome81:
+  name: Run on Chrome 81
+  runs-on: ubuntu-18.04
+  container: cypress/browsers:node12.16.2-chrome81-ff75
+  steps:
+    - uses: actions/checkout@v2
+    - name: Install a project with a clean slate
+      run: |
+        npm ci
+        $(npm bin)/cypress cache path
+        $(npm bin)/cypress cache list
+        $(npm bin)/cypress verify
+    - name: Run Cypress tests
+      run: npm run test:chrome
+      continue-on-error: true
+    - name: Copy test execution videos
+      run: |
+        mkdir public
+        cp -r cypress/videos public/videos
+    - name: Merge test results into one
+      run: npm run report:merge
+    - name: Generate HTML report
+      run: npm run report:generate
+    - name: Deploy report page
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'        
