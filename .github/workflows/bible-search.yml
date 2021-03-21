@@ -1,3 +1,4 @@
+
 name: Create Cypress report
 on:
   push:
@@ -7,8 +8,8 @@ on:
 jobs:
   cypress-e2e-chrome89:
     name: Run on Chrome 89
-    runs-on: ubuntu-18.04
-    #container: cypress/browsers:node14.16.0-chrome89-ff86
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node14.16.0-chrome89-ff86
     steps:
     - uses: actions/checkout@v2
 
