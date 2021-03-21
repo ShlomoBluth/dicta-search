@@ -24,6 +24,8 @@
   "homepage": "https://github.com/ShlomoBluth/dicta-search#readme",
   "devDependencies": {
     "cypress": "^6.7.1",
+    "cypress-multi-reporters": "^1.4.0",
+    "mocha": "^8.3.2",
     "mochawesome": "^6.2.2"
   },
   "dependencies": {
