@@ -224,7 +224,7 @@ Cypress.Commands.add('ResultsOfSelectedMeaningsAndSynonyms',(result,selectedMean
         }
       }
     }).then(()=>{
-      expect(hasMeanings).eq(true)
+      cy.wrap(hasMeanings).should('be.true')
     })
 })
 

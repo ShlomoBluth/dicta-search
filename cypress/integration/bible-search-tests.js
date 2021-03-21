@@ -187,6 +187,8 @@ describe('bible-search-tests',()=>{
         })
     })
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     it('Removal of meaning',()=>{
         cy.searchRun({text:'אריה',collection:'תנ"ך',language:'Hebrew'})
         cy.showMeaningsAndSynonyms()
@@ -210,7 +212,7 @@ describe('bible-search-tests',()=>{
         })       
     })
 
-    ///////////////////////////////////////////////////////////////////////////
+   
 
 
     it('No meanings but there are synonyms',()=>{
@@ -241,113 +243,113 @@ describe('bible-search-tests',()=>{
 
     it('Search with root words',()=>{
         cy.searchRun({text:'ברא',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('וַיִּבְרָא')
+        cy.existsInResult('וַיִּבְרָא','בָּרָא')
     })
 
     it('search full spelling and also get partial spelling results',()=>{
         cy.searchRun({text:'דָּוִיד',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('דָוִד')
+        cy.existsInResult('דָוִד','דָּוִיד')
     })
 
     it('search partial spelling and also get full spelling results',()=>{
         cy.searchRun({text:'דָוִד',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('דָּוִיד')
+        cy.existsInResult('דָּוִיד','דָוִד')
     })
 
-    // it('Second person',()=>{
-    //     cy.searchRun({text:'אֹתְכָה',collection:'תנ"ך',language:'Hebrew'})
-    //     cy.existsInResult('אֹותְךָ')
-    // })
+    // // it('Second person',()=>{
+    // //     cy.searchRun({text:'אֹתְכָה',collection:'תנ"ך',language:'Hebrew'})
+    // //     cy.existsInResult('אֹותְךָ')
+    // // })
 
     it('Different suffixes second person that does not end with "ה"',()=>{
         cy.searchRun({text:'אֹותְךָ',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('אֹתְכָה')
+        cy.existsInResult('אֹתְכָה','אֹותְךָ')
     })
 
-    // it('Second person, female',()=>{
-    //     cy.searchRun({text:'גַּרְתָּה',collection:'תנ"ך',language:'Hebrew'})
-    //     cy.existsInResult('גַּרְתָּ')
-    // })
+    // // it('Second person, female',()=>{
+    // //     cy.searchRun({text:'גַּרְתָּה',collection:'תנ"ך',language:'Hebrew'})
+    // //     cy.existsInResult('גַּרְתָּ')
+    // // })
 
     it('Different suffixes second person, female that does not end with "ה"',()=>{
         cy.searchRun({text:'גַּרְתָּ',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('גַּרְתָּה')
+        cy.existsInResult('גַּרְתָּה','גַּרְתָּ')
     })
 
-    // it('Third person',()=>{
-    //     cy.searchRun({text:'כֻּלֹּה',collection:'תנ"ך',language:'Hebrew'})
-    //     cy.existsInResult('כֻּלֹּו')
-    // })
+    // // it('Third person',()=>{
+    // //     cy.searchRun({text:'כֻּלֹּה',collection:'תנ"ך',language:'Hebrew'})
+    // //     cy.existsInResult('כֻּלֹּו')
+    // // })
 
     it('Different suffixes third person that does not end with "ה"',()=>{
         cy.searchRun({text:'כֻּלֹּו',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('כֻּלֹּה')
+        cy.existsInResult('כֻּלֹּה','כֻּלֹּו')
     })
 
     it('Search additional א and also get missing א results',()=>{
         cy.searchRun({text:'ונטמאתם',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('וְנִטְמֵתֶם')
+        cy.existsInResult('וְנִטְמֵתֶם','ונטמאתם')
     })
 
     it('Search additional א and also get missing א results',()=>{
         cy.searchRun({text:'מראשית',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('מֵרֵשִׁית')
+        cy.existsInResult('מֵרֵשִׁית','מֵרֵאשִׁית')
     })
 
 
     it('Search missing א and also get additional א results',()=>{
         cy.searchRun({text:'ורציתי',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('וְרָצִאתִי')
+        cy.existsInResult('וְרָצִאתִי','ורציתי')
     })
 
-    // it('Search missing א and also get additional א results',()=>{
-    //     cy.searchRun({text:'מֵרֵשִׁית',collection:'תנ"ך',language:'Hebrew'})
-    //     cy.existsInResult('מֵרֵאשִׁית')
-    // })
+    // // it('Search missing א and also get additional א results',()=>{
+    // //     cy.searchRun({text:'מֵרֵשִׁית',collection:'תנ"ך',language:'Hebrew'})
+    // //     cy.existsInResult('מֵרֵאשִׁית')
+    // // })
 
 
     it('Search missing ה and also get additional ה results',()=>{
         cy.searchRun({text:'כָּמֹוךָ',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('כָמֹכָה')
+        cy.existsInResult('כָמֹכָה','כָּמֹוךָ')
     })
 
-    // it('Additional ה',()=>{
-    //     cy.searchRun({text:'כָמֹכָה',collection:'תנ"ך',language:'Hebrew'})
-    //     cy.existsInResult('כָּמֹוךָ')
-    // })
+    // // it('Additional ה',()=>{
+    // //     cy.searchRun({text:'כָמֹכָה',collection:'תנ"ך',language:'Hebrew'})
+    // //     cy.existsInResult('כָּמֹוךָ')
+    // // })
 
     it('Interchangeable letters',()=>{
         cy.searchRun({text:'ימלא',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('יְמַלֵּה') 
+        cy.existsInResult('יְמַלֵּה','יִמָּלֵא') 
     })
 
     it('Interchangeable letters',()=>{
-        cy.searchRun({text:'חיטים',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('חִטִּין') 
+        cy.searchRun({text:'חטים',collection:'תנ"ך',language:'Hebrew'})
+        cy.existsInResult('חִטִּין','חִטִּים') 
     })
 
-    // it('Interchangeable letters',()=>{
-    //     cy.searchRun({text:'יְמַלֵּה',collection:'תנ"ך',language:'Hebrew'})
-    //     cy.existsInResult('יִמָּלֵא')
-    // })
+    // // it('Interchangeable letters',()=>{
+    // //     cy.searchRun({text:'יְמַלֵּה',collection:'תנ"ך',language:'Hebrew'})
+    // //     cy.existsInResult('יִמָּלֵא')
+    // // })
 
     it('Interchangeable letters',()=>{
         cy.searchRun({text:'וארסתיך',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('וְאֵרַשְׂתִּיךְ') 
+        cy.existsInResult('וְאֵרַשְׂתִּיךְ','וארסתיך') 
     })
 
     it('Different ways the bible refers to G-d',()=>{
         cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('הָאֱלֹהִים')
+        cy.existsInResult('הָאֱלֹהִים','א-להים')
         // cy.searchRun({text:'ה\'',language:'Hebrew'})
         // cy.existsInResult('הָאֱלֹהִים')
     })
 
     it('Search with numbers',()=>{
         cy.searchRun({text:'127',collection:'תנ"ך',language:'Hebrew'})
-        cy.existsInResult('מֵאָה')
-        cy.existsInResult('וְעֶשְׂרִים')
-        cy.existsInResult('וְשֶׁבַע')
+        cy.existsInResult('מֵאָה','100')
+        cy.existsInResult('וְעֶשְׂרִים', '20')
+        cy.existsInResult('וְשֶׁבַע','7')
     })
 
     // const downloadsFolder = Cypress.config('downloadsFolder')
