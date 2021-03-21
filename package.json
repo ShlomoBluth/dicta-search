@@ -26,7 +26,8 @@
     "cypress": "^6.7.1",
     "cypress-multi-reporters": "^1.4.0",
     "mocha": "^8.3.2",
-    "mochawesome": "^6.2.2"
+    "mochawesome": "^6.2.2",
+    "mochawesome-merge": "^4.2.0"
   },
   "dependencies": {
     "js-levenshtein": "^1.1.6"
