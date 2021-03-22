@@ -18,9 +18,9 @@ jobs:
 
     - name: Install a project with a clean slate
       run: |
-        sudo apt-get update
-        sudo apt-get install -y libgbm-dev
-        npx ci
+        xvfb-run npx ci
+        xvfb-run sudo apt-get update
+        xvfb-run sudo apt-get install -y libgbm-dev
 
     #- name: Run chrome tests
       #run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js
