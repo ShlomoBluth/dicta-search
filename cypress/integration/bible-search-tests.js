@@ -39,7 +39,7 @@ describe('bible-search-tests',()=>{
         cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
         cy.showAllWordForms()
         //The number in the top has 12
-        cy.get('.f > span > :nth-child(2)').should('contain',12)
+        cy.get('.f > span > :nth-child(2)').should('contain',10)
         //Removal of בַּיֹּום
         cy.get('li').contains('בַּיֹּום').within(()=>{
             cy.get('[type="checkbox"]').uncheck({force: true})

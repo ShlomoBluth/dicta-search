@@ -28,11 +28,11 @@ jobs:
 
     - name: Run chrome tests
       run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js
-      continue-on-error: false
+      continue-on-error: true
 
     - name: Run firefox tests
       run: xvfb-run npx cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js
-      continue-on-error: false  
+      continue-on-error: true  
 
 
     - name: Copy test execution videos 
