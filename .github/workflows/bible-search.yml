@@ -1,9 +1,11 @@
+name: Bible search tests
 
-name: Create Cypress report
-on:
-  push:
-    branches:
-      - 'master'
+on: 
+  #push
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '0 6,14,22 * * *'
+
 
 jobs:
   cypress-e2e-chrome89:
