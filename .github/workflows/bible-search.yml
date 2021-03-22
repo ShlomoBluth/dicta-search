@@ -19,7 +19,7 @@ jobs:
 
     - name: Install a project with a clean slate
       run: |
-        xvfb-run npx ci
+        npx ci
         apt-get update
         apt-get install -y libgbm-dev
 
