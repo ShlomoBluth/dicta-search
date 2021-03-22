@@ -22,10 +22,13 @@ jobs:
     - name: Install a project with a clean slate
       run: |
         npx ci
+        $(npm bin)/cypress cache path
+        $(npm bin)/cypress cache list
+        $(npm bin)/cypress verify
 
-    #- name: Run chrome tests
-      #run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js
-      #continue-on-error: false
+    - name: Run chrome tests
+      run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js
+      continue-on-error: false
 
     - name: Run firefox tests
       run: xvfb-run npx cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js
