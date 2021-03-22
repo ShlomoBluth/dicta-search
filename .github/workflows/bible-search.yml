@@ -9,7 +9,7 @@ jobs:
   cypress-e2e-chrome89:
     name: Run on Chrome 89
     runs-on: ubuntu-latest
-    container: cypress/browsers:node14.10.1-edge88
+    container: cypress/browsers:node12.13.0-chrome80-ff74
 
     steps:
     - uses: actions/checkout@v1
