@@ -19,6 +19,9 @@ jobs:
     - name: Install a project with a clean slate
       run: |
         npm ci
+        $(npm bin)/cypress cache path
+        $(npm bin)/cypress cache list
+        $(npm bin)/cypress verify
 
     #- name: Run chrome tests
       #run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js
