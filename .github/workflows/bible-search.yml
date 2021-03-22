@@ -18,7 +18,8 @@ jobs:
 
     - name: Install a project with a clean slate
       run: |
-        npm ci
+        RUN npm install cypress
+        RUN firefox --version
 
     #- name: Run chrome tests
       #run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js
