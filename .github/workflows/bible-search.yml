@@ -30,27 +30,31 @@ jobs:
 
     - name: Run chrome tests
       run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js
-      continue-on-error: true
+      
 
     - name: Run firefox tests
       run: xvfb-run npx cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js
-      continue-on-error: true  
+      if: ${{ always() }}  
 
 
     - name: Copy test execution videos 
       run: |
         mkdir public
         cp -r cypress/videos public/videos
+      if: ${{ always() }}
 
     - name: Merge test results into one
       run: npm run report:merge
+      if: ${{ always() }}
 
     - name: Generate HTML report
       run: npm run report:generate
+      if: ${{ always() }}
 
     - name: Deploy report page
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./public
+      if: ${{ always() }}
                 
