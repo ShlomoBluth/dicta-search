@@ -1,9 +1,7 @@
 {
     "projectId": "y4wdqf",
-    "defaultCommandTimeout": 20000,
     "baseUrl":"https://use-dicta-components-2--cranky-banach-377068.netlify.app/",
-    "reporter": "cypress-multi-reporters",
-    "reporterOptions": {
-        "configFile": "reporter-config.json"
+    "env":{
+        "configFile":"config"
     }
 }

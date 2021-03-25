@@ -140,6 +140,28 @@ describe('bible-search-tests',()=>{
         })
     })
 
+    it('Removal of collection',()=>{
+        cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
+        cy.showBooks()
+        //remove collection תורה
+        cy.get('span').contains('תורה').parent('a').siblings('[class="inner-accordion-content"]')
+        .within(()=>{
+            cy.get('[class*="selectAll"]').within(()=>{
+                cy.get('[type="checkbox"]').uncheck({force: true})
+                cy.get('[type="checkbox"]').should('not.be.checked')
+            })
+        })
+        cy.selectedBooksMap().then(selectedBooks=>{
+            //Number of books is 4
+            expect(selectedBooks.size).eq(4)
+            cy.resultPagination({
+                tests:'books',
+                data:selectedBooks
+            })
+        })
+    })
+
+
     it('Each result has at least one meaning of each search word',()=>{
         cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
         cy.showMeaningsAndSynonyms()
@@ -352,6 +374,69 @@ describe('bible-search-tests',()=>{
         cy.existsInResult('מֵאָה','100')
         cy.existsInResult('וְעֶשְׂרִים', '20')
         cy.existsInResult('וְשֶׁבַע','7')
+    })
+
+    it('No nikud',()=>{
+        cy.searchRun({text:'בראשית ברא',collection:'תנ"ך',language:'Hebrew'})
+        cy.theFormOfTheText('ללא ניקוד')
+        cy.get('[class="result-li"]').first().should('contain','בראשית ברא')
+    })
+
+    it('With nikud',()=>{
+        cy.searchRun({text:'בראשית ברא',collection:'תנ"ך',language:'Hebrew'})
+        cy.theFormOfTheText('עם ניקוד')
+        cy.get('[class="result-li"]').first().should('contain','בְּרֵאשִׁית בָּרָא')
+    })
+
+    it('With nikud and Taamim',()=>{
+        cy.searchRun({text:'בראשית ברא',collection:'תנ"ך',language:'Hebrew'})
+        cy.theFormOfTheText('ניקוד וטעמים')
+        cy.get('[class="result-li"]').first().should('contain','בְּרֵאשִׁ֖ית בָּרָ֣א')
+    })
+
+
+    it('Increasing the font',()=>{
+        let fontSize
+        cy.searchRun({text:'בראשית ברא',collection:'תנ"ך',language:'Hebrew'})
+        cy.fontSize().then(size=>{
+            fontSize=size
+        })
+        cy.get('[class*=fa-search-plus]').click()
+        cy.fontSize().then(size=>{
+            cy.wrap(size).should('be.gt',fontSize)
+        })
+        cy.get('[class*=fa-search-minus]').click()
+    })
+
+    it('Font reduction',()=>{
+        let fontSize
+        cy.searchRun({text:'בראשית ברא',collection:'תנ"ך',language:'Hebrew'})
+        cy.fontSize().then(size=>{
+            fontSize=size
+        })
+        cy.get('[class*=fa-search-minus]').click()
+        cy.fontSize().then(size=>{
+            cy.wrap(size).should('be.lt',fontSize)
+        })
+        cy.get('[class*=fa-search-plus]').click()
+    })
+
+    it('10 results per page',()=>{
+        cy.searchRun({text:'דוד',collection:'תנ"ך',language:'Hebrew'})
+        cy.numberOfResultInPage('10')
+        cy.get('[class="result-li"]').should('have.length',10)
+    })
+
+    it('50 results per page',()=>{
+        cy.searchRun({text:'דוד',collection:'תנ"ך',language:'Hebrew'})
+        cy.numberOfResultInPage('50')
+        cy.get('[class="result-li"]').should('have.length',50)
+    })
+
+    it('100 results per page',()=>{
+        cy.searchRun({text:'דוד',collection:'תנ"ך',language:'Hebrew'})
+        cy.numberOfResultInPage('100')
+        cy.get('[class="result-li"]').should('have.length',100)
     })
 
     // const downloadsFolder = Cypress.config('downloadsFolder')
