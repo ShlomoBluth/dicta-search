@@ -10,7 +10,8 @@
     "runFirefox": "cypress run --browser firefox  --record --key f015ae7b-ed3d-4a35-a648-8c1428f03e3c",
     "test:chrome": "cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js ",
     "report:merge": "mochawesome-merge cypress/results/json/*.json > index.json",
-    "report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html"
+    "report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html",
+    "searchResults-convert": "mammoth cypress/downloads/searchResults.docx cypress/downloads/searchResults.html"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "mochawesome-merge": "^4.2.0"
   },
   "dependencies": {
-    "js-levenshtein": "^1.1.6"
+    "js-levenshtein": "^1.1.6",
+    "mammoth": "^1.4.16"
   }
 }
