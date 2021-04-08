@@ -42,7 +42,7 @@ sizes.forEach((size) => {
 
         it('Each result contains at least one word form of each search word',()=>{
             cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
-            cy.removeTaamim()
+            cy.theFormOfTheText('עם ניקוד')
             cy.showAllWordForms()
             cy.eachSelectedWordFormMatrix().then(selectedWordFormMatrix=>{
                 //For the first word in the search has 12 words form
@@ -244,10 +244,10 @@ sizes.forEach((size) => {
             }).then(()=>{
                 cy.get('[class*="loader"]').should('not.exist')
                 //Check meanings update
-                cy.get('[class*="collapse-btn"]').first().click().then(()=>{
+                cy.get('[class*="collapse-btn"]').first().click({force: true}).then(()=>{
                     cy.get('[class="description-text"]').should('have.length',15)
                 })
-                cy.get('[class*="collapse-btn"]').first().click()
+                cy.get('[class*="collapse-btn"]').first().click({force: true})
                 cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
                     cy.resultPagination({
                         tests:'selectedMeaningsAndSynonyms',
@@ -422,11 +422,11 @@ sizes.forEach((size) => {
             cy.fontSize().then(size=>{
                 fontSize=size
             })
-            cy.get('[class*=fa-search-plus]').click()
+            cy.get('[class*=fa-search-plus]').click({force: true})
             cy.fontSize().then(size=>{
                 cy.wrap(size).should('be.gt',fontSize)
             })
-            cy.get('[class*=fa-search-minus]').click()
+            cy.get('[class*=fa-search-minus]').click({force: true})
         })
     
         it('Font reduction',()=>{
@@ -435,11 +435,11 @@ sizes.forEach((size) => {
             cy.fontSize().then(size=>{
                 fontSize=size
             })
-            cy.get('[class*=fa-search-minus]').click()
+            cy.get('[class*=fa-search-minus]').click({force: true})
             cy.fontSize().then(size=>{
                 cy.wrap(size).should('be.lt',fontSize)
             })
-            cy.get('[class*=fa-search-plus]').click()
+            cy.get('[class*=fa-search-plus]').click({force: true})
         })
     
         it('10 results per page',()=>{
@@ -530,7 +530,7 @@ sizes.forEach((size) => {
                      cy.exec('npm run searchResults-convert', {failOnNonZeroExit: false})
                      cy.validateFile({
                          type:'html',
-                         resNum:46,
+                         resNum:12,
                          collection:'תנ"ך'
                      })
                  })

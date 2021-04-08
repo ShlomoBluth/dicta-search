@@ -1,5 +1,5 @@
 Cypress.Commands.add('removeTaamim',()=>{
-  cy.get('[class*="text-select f-narkis"]').click()
+  cy.get('[class*="text-select f-narkis"]').click({force: true})
 })
 
 

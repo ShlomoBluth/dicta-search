@@ -16,13 +16,13 @@ Cypress.Commands.add('showMeaningsAndSynonyms',()=>{
   }).then(()=>{
     cy.get('body').within($body=>{
       if($body.find('[class="morebtn"]').length>0){
-        cy.get('[class="morebtn"]').click({multiple:true})
+        cy.get('[class="morebtn"]').click({multiple:true,force: true})
       }
     }).then(()=>{
       cy.get('body').within($body=>{
         //Open Synonyms
         if($body.find('[class*=expand-area-text]').length>0){
-          cy.get('[class*=expand-area-text]').click({multiple:true})
+          cy.get('[class*=expand-area-text]').click({multiple:true,force: true})
         }
       })
     })
