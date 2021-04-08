@@ -505,12 +505,14 @@ describe('bible-search-tests',()=>{
         cy.removeDownloadsFiles()
         cy.downloadFile({type:'Word'}).then(()=>{
             //Convert file to html
-            cy.exec('npm run searchResults-convert', {failOnNonZeroExit: false})
-            cy.validateFile({
-                type:'html',
-                resNum:12,
-                collection:'תנ"ך'
-            })
+            cy.readFile('cypress/downloads/searchResults.docx').then(()=>{
+                 cy.exec('npm run searchResults-convert', {failOnNonZeroExit: false})
+                 cy.validateFile({
+                     type:'html',
+                     resNum:46,
+                     collection:'תנ"ך'
+                 })
+             })
         })
     })
 
