@@ -498,7 +498,7 @@ sizes.forEach((size) => {
         })
     
         
-        it('HTML download', { browser: '!firefox' },()=>{
+        it('HTML download',()=>{
             cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
             cy.removeDownloadsFiles()
             cy.downloadFile({type:'HTML'}).then(()=>{
@@ -519,7 +519,7 @@ sizes.forEach((size) => {
         //     })
         // })
     
-        , { browser: '!firefox' }
+        
         it('TXT download',()=>{
             cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
             cy.removeDownloadsFiles()
@@ -562,7 +562,7 @@ sizes.forEach((size) => {
         //     })
         // })
     
-        it('Word download', { browser: '!firefox' },()=>{
+        it('Word download',()=>{
             cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
             cy.removeDownloadsFiles()
             cy.downloadFile({type:'Word'}).then(()=>{
