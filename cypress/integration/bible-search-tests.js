@@ -106,10 +106,7 @@ sizes.forEach((size) => {
             cy.visit('/')
             cy.searchRun({text:'"שלום בית"',collection:'תנ"ך',language:'Hebrew'})
             cy.theFormOfTheText('עם ניקוד')
-            // cy.get('input[class*="search-form-control"]').clear({force:true})
-            // .type('"שלום בית"',{force:true})
-            cy.get('[class*="fa-search text"]').click({force:true})
-            cy.get('[class*="loader"]').should('not.exist')
+            
             //Number of results
             cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
                 expect(parseInt($numberOfResults.text())).to.eq(2)
