@@ -42,266 +42,265 @@ sizes.forEach((size) => {
         // //     //cy.navigateToStartPage('https://use-dicta-components-2--tender-hamilton-5d028e.netlify.app/')
         // // })
 
-        // it('Each result contains at least one word form of each search word',()=>{
-        //     cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.showAllWordForms()
-        //     cy.eachSelectedWordFormMatrix().then(selectedWordFormMatrix=>{
-        //         //For the first word in the search has 12 words form
-        //         expect(selectedWordFormMatrix[0].length).eq(12)
-        //         //For the second word in the search has 2 words form
-        //         expect(selectedWordFormMatrix[1].length).eq(2)
-        //         cy.resultPagination({
-        //             tests:'wordForms',
-        //             data:selectedWordFormMatrix
-        //         })
-        //     })
-        // })
+        it('Each result contains at least one word form of each search word',()=>{
+            cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.showAllWordForms()
+            cy.eachSelectedWordFormMatrix().then(selectedWordFormMatrix=>{
+                //For the first word in the search has 12 words form
+                expect(selectedWordFormMatrix[0].length).eq(12)
+                //For the second word in the search has 2 words form
+                expect(selectedWordFormMatrix[1].length).eq(2)
+                cy.resultPagination({
+                    tests:'wordForms',
+                    data:selectedWordFormMatrix
+                })
+            })
+        })
     
-        // it('Removal of word form',()=>{
-        //     cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.showAllWordForms()
-        //     //The number in the top has 12
-        //     cy.get('.f > span > :nth-child(2)').should('contain',12)
-        //     //Removal of בַּיֹּום
-        //     cy.get('li').contains('בַּיֹּום').within(()=>{
-        //         cy.get('[type="checkbox"]').uncheck({force: true})
-        //     })
-        //     cy.get('[class*="loader"]').should('not.exist')
-        //     //The number in the top has 11
-        //     cy.get('.f > span > :nth-child(2)').should('contain',11)
-        //     cy.eachSelectedWordFormMatrix().then(selectedWordFormMatrix=>{
-        //         //For the first word in the search has 11 words form    
-        //         expect(selectedWordFormMatrix[0].length).eq(11)
-        //         //For the second word in the search has 2 words form
-        //         expect(selectedWordFormMatrix[1].length).eq(2)
-        //         cy.resultPagination({
-        //             tests:'wordForms',
-        //             data:selectedWordFormMatrix
-        //         })
-        //     })
-        //     //Check of בַּיֹּום
-        //     cy.get('li').contains('בַּיֹּום').within(()=>{
-        //         cy.get('[type="checkbox"]').check({force: true})
-        //     })
-        // })
+        it('Removal of word form',()=>{
+            cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.showAllWordForms()
+            //The number in the top has 12
+            cy.get('.f > span > :nth-child(2)').should('contain',12)
+            //Removal of בַּיֹּום
+            cy.get('li').contains('בַּיֹּום').within(()=>{
+                cy.get('[type="checkbox"]').uncheck({force: true})
+            })
+            cy.get('[class*="loader"]').should('not.exist')
+            //The number in the top has 11
+            cy.get('.f > span > :nth-child(2)').should('contain',11)
+            cy.eachSelectedWordFormMatrix().then(selectedWordFormMatrix=>{
+                //For the first word in the search has 11 words form    
+                expect(selectedWordFormMatrix[0].length).eq(11)
+                //For the second word in the search has 2 words form
+                expect(selectedWordFormMatrix[1].length).eq(2)
+                cy.resultPagination({
+                    tests:'wordForms',
+                    data:selectedWordFormMatrix
+                })
+            })
+            //Check of בַּיֹּום
+            cy.get('li').contains('בַּיֹּום').within(()=>{
+                cy.get('[type="checkbox"]').check({force: true})
+            })
+        })
             
            
         
-        // it('Each word form appears in the results as the number of times it has been written next to word form',()=>{
-        //     cy.searchRun({text:'צבי',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.showAllWordForms()
-        //     cy.wordFormsWithNumberOfAppearances()
-        // })
+        it('Each word form appears in the results as the number of times it has been written next to word form',()=>{
+            cy.searchRun({text:'צבי',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.showAllWordForms()
+            cy.wordFormsWithNumberOfAppearances()
+        })
     
-        // it('A pair of words that come one after the other',()=>{
-        //     cy.searchRun({text:'שלום בית',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     //Number of results
-        //     cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-        //         expect(parseInt($numberOfResults.text())).to.eq(116)
-        //     })
-        //     cy.get('input[class*="search-form-control"]').clear({force:true})
-        //     .type('"שלום בית"',{force:true})
-        //     cy.get('[class*="fa-search text"]').click({force:true})
-        //     cy.get('[class*="loader"]').should('not.exist')
-        //     //Number of results
-        //     cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-        //         expect(parseInt($numberOfResults.text())).to.eq(2)
-        //     }).then(()=>{
-        //         cy.showAllWordForms()
-        //         //Wait for word forms to update 
-        //         cy.get('[class="control control--checkbox"]').should('have.length',7)
-        //         cy.consecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
-        //             cy.log(consecutiveWordFormsArray[8])
-        //             cy.resultPagination({
-        //                 tests:'wordFormsConsecutive',
-        //                 data:consecutiveWordFormsArray
-        //             })
-        //         })
-        //     })
-        // })
+        it('A pair of words that come one after the other',()=>{
+            cy.searchRun({text:'שלום בית',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            //Number of results
+            cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+                expect(parseInt($numberOfResults.text())).to.eq(116)
+            })
+            cy.get('input[class*="search-form-control"]').clear({force:true})
+            .type('"שלום בית"',{force:true})
+            cy.get('[class*="fa-search text"]').click({force:true})
+            cy.get('[class*="loader"]').should('not.exist')
+            //Number of results
+            cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+                expect(parseInt($numberOfResults.text())).to.eq(2)
+            }).then(()=>{
+                cy.showAllWordForms()
+                //Wait for word forms to update 
+                cy.get('[class="control control--checkbox"]').should('have.length',7)
+                cy.consecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
+                    cy.log(consecutiveWordFormsArray[8])
+                    cy.resultPagination({
+                        tests:'wordFormsConsecutive',
+                        data:consecutiveWordFormsArray
+                    })
+                })
+            })
+        })
     
-        // it('Each result contains the specific word',()=>{
-        //     cy.searchRun({text:'לַאֲרָיֹות',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //      cy.resultPagination({
-        //         tests: 'specific search',
-        //         data:'לַאֲרָיֹות'
-        //      })
-        //  })
+        it('Each result contains the specific word',()=>{
+            cy.searchRun({text:'לַאֲרָיֹות',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+             cy.resultPagination({
+                tests: 'specific search',
+                data:'לַאֲרָיֹות'
+             })
+         })
     
         
     
        
     
-        // it('Each book appears in the results as the number of times it has been written next to book',()=>{
-        //     cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.showBooks()
-        //     cy.selectedBooksMap().then(selectedBooks=>{
-        //         //Number of books is 7    
-        //         expect(selectedBooks.size).eq(7)
-        //         cy.resultPagination({
-        //             tests:'books',
-        //             data:selectedBooks
-        //         })
-        //     })
-        // })
+        it('Each book appears in the results as the number of times it has been written next to book',()=>{
+            cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.showBooks()
+            cy.selectedBooksMap().then(selectedBooks=>{
+                //Number of books is 7    
+                expect(selectedBooks.size).eq(7)
+                cy.resultPagination({
+                    tests:'books',
+                    data:selectedBooks
+                })
+            })
+        })
     
-        // it('Removal of book',()=>{
-        //     cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.showBooks()
-        //     //remove book שמות
-        //     cy.get('[class="slide-li"]').contains('ספר שמות').within(()=>{
-        //         cy.get('[type="checkbox"]').uncheck({force: true})
-        //         cy.get('[type="checkbox"]').should('not.be.checked')
-        //     })
-        //     cy.selectedBooksMap().then(selectedBooks=>{
-        //         //Number of books is 6
-        //         expect(selectedBooks.size).eq(6)
-        //         cy.resultPagination({
-        //             tests:'books',
-        //             data:selectedBooks
-        //         })
-        //     })
-        // })
+        it('Removal of book',()=>{
+            cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.showBooks()
+            //remove book שמות
+            cy.get('[class="slide-li"]').contains('ספר שמות').within(()=>{
+                cy.get('[type="checkbox"]').uncheck({force: true})
+                cy.get('[type="checkbox"]').should('not.be.checked')
+            })
+            cy.selectedBooksMap().then(selectedBooks=>{
+                //Number of books is 6
+                expect(selectedBooks.size).eq(6)
+                cy.resultPagination({
+                    tests:'books',
+                    data:selectedBooks
+                })
+            })
+        })
     
-        // it('Removal of collection',()=>{
-        //     cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.showBooks()
-        //     //remove collection תורה
-        //     cy.get('span').contains('תורה').parent('a').siblings('[class*="inner-accordion-content"]')
-        //     .within(()=>{
-        //         cy.get('[class*="selectAll"]').within(()=>{
-        //             cy.get('[type="checkbox"]').uncheck({force: true})
-        //             cy.get('[type="checkbox"]').should('not.be.checked')
-        //         })
-        //     })
-        //     cy.selectedBooksMap().then(selectedBooks=>{
-        //         //Number of books is 4
-        //         expect(selectedBooks.size).eq(4)
-        //         cy.resultPagination({
-        //             tests:'books',
-        //             data:selectedBooks
-        //         })
-        //     })
-        // })
+        it('Removal of collection',()=>{
+            cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.showBooks()
+            //remove collection תורה
+            cy.get('span').contains('תורה').parent('a').siblings('[class*="inner-accordion-content"]')
+            .within(()=>{
+                cy.get('[class*="selectAll"]').within(()=>{
+                    cy.get('[type="checkbox"]').uncheck({force: true})
+                    cy.get('[type="checkbox"]').should('not.be.checked')
+                })
+            })
+            cy.selectedBooksMap().then(selectedBooks=>{
+                //Number of books is 4
+                expect(selectedBooks.size).eq(4)
+                cy.resultPagination({
+                    tests:'books',
+                    data:selectedBooks
+                })
+            })
+        })
     
     
-        // it('Each result has at least one meaning of each search word',()=>{
-        //     cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.showMeaningsAndSynonyms()
-        //     cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
-        //         cy.resultPagination({
-        //             tests:'selectedMeaningsAndSynonyms',
-        //             data:meaningsAndSynonymsMatrix
-        //         })
-        //     })
-        // })
+        it('Each result has at least one meaning of each search word',()=>{
+            cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.showMeaningsAndSynonyms()
+            cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
+                cy.resultPagination({
+                    tests:'selectedMeaningsAndSynonyms',
+                    data:meaningsAndSynonymsMatrix
+                })
+            })
+        })
     
-        // it('Each meaning appears in the results as the number of times it has been written next to meaning',()=>{
-        //     cy.searchRun({text:'הבל הבלים',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.showMeaningsAndSynonyms()
-        //     cy.eachMeaningTests() 
-        // })
+        it('Each meaning appears in the results as the number of times it has been written next to meaning',()=>{
+            cy.searchRun({text:'הבל הבלים',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.showMeaningsAndSynonyms()
+            cy.eachMeaningTests() 
+        })
     
-        // it('Each meaning and synonym appears in the results as the number of times it has been written'+
-        // ' next to meaning',()=>{
-        //     cy.searchRun({text:'הבל הבלים',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.showMeaningsAndSynonyms()
-        //     cy.synonymsTests()
-        // })
+        it('Each meaning and synonym appears in the results as the number of times it has been written'+
+        ' next to meaning',()=>{
+            cy.searchRun({text:'הבל הבלים',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.showMeaningsAndSynonyms()
+            cy.synonymsTests()
+        })
     
-        // it('Each result has at least one meaning or synonym of each search word',()=>{
-        //     let numberOfResults
-        //     cy.searchRun({text:'צבי',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     //num of results befor synonyms
-        //     cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-        //         numberOfResults=parseInt($numberOfResults.text())
-        //     }).then(()=>{
-        //         cy.showMeaningsAndSynonyms()
-        //         cy.selectSynonym('עֹפֶר')
-        //         cy.selectSynonym('צָבָא')
-        //     }).then(()=>{
-        //         //num of results after synonyms
-        //         cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-        //             expect(parseInt($numberOfResults.text())).to.greaterThan( numberOfResults)
-        //         })
-        //     }).then(()=>{
-        //         cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
-        //             cy.resultPagination({
-        //                 tests:'selectedMeaningsAndSynonyms',
-        //                 data:meaningsAndSynonymsMatrix
-        //             })
-        //         })
-        //     })
-        // })
+        it('Each result has at least one meaning or synonym of each search word',()=>{
+            let numberOfResults
+            cy.searchRun({text:'צבי',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            //num of results befor synonyms
+            cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+                numberOfResults=parseInt($numberOfResults.text())
+            }).then(()=>{
+                cy.showMeaningsAndSynonyms()
+                cy.selectSynonym('עֹפֶר')
+                cy.selectSynonym('צָבָא')
+            }).then(()=>{
+                //num of results after synonyms
+                cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+                    expect(parseInt($numberOfResults.text())).to.greaterThan( numberOfResults)
+                })
+            }).then(()=>{
+                cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
+                    cy.resultPagination({
+                        tests:'selectedMeaningsAndSynonyms',
+                        data:meaningsAndSynonymsMatrix
+                    })
+                })
+            })
+        })
     
-        // // ////////////////////////////////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////////////////////////////////
     
-        // it('Removal of meaning',()=>{
-        //     cy.searchRun({text:'אריה',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.showMeaningsAndSynonyms()
-        //     //cy.intercept('**').as('requests')
-        //     cy.get('li[class="slide-li"]').contains('אֲרִי').within(()=>{
-        //         cy.get('[type="checkbox"]').uncheck({force: true})
-        //         cy.get('[type="checkbox"]').should('not.be.checked')
-        //     }).then(()=>{
-        //         cy.get('[class*="loader"]').should('not.exist')
-        //         //Check meanings update
-        //         cy.get('[class*="collapse-btn"]').first().click({force: true}).then(()=>{
-        //             cy.get('[class="description-text"]').should('have.length',15)
-        //         })
-        //         cy.get('[class*="collapse-btn"]').first().click({force: true})
-        //         cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
-        //             cy.resultPagination({
-        //                 tests:'selectedMeaningsAndSynonyms',
-        //                 data:meaningsAndSynonymsMatrix
-        //             })
-        //         })
-        //     })       
-        // })
+        it('Removal of meaning',()=>{
+            cy.searchRun({text:'אריה',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.showMeaningsAndSynonyms()
+            //cy.intercept('**').as('requests')
+            cy.get('li[class="slide-li"]').contains('אֲרִי').within(()=>{
+                cy.get('[type="checkbox"]').uncheck({force: true})
+                cy.get('[type="checkbox"]').should('not.be.checked')
+            }).then(()=>{
+                cy.get('[class*="loader"]').should('not.exist')
+                //Check meanings update
+                cy.get('[class*="collapse-btn"]').first().click({force: true}).then(()=>{
+                    cy.get('[class="description-text"]').should('have.length',15)
+                })
+                cy.get('[class*="collapse-btn"]').first().click({force: true})
+                cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
+                    cy.resultPagination({
+                        tests:'selectedMeaningsAndSynonyms',
+                        data:meaningsAndSynonymsMatrix
+                    })
+                })
+            })       
+        })
     
        
     
     
-        // it('No meanings but there are synonyms',()=>{
-        //     cy.searchRun({text:'ששון חדווה',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     //Results not exist
-        //     cy.get('[class="result-list"]').should('not.exist').then(()=>{
-        //         cy.showMeaningsAndSynonyms()
-        //         //Select synonym of the word
-        //         cy.get('[class="inner-ul"]').first().within(()=>{
-        //             cy.selectSynonym('גִּילָה')
-        //         })
-        //         //Select synonym of the word
-        //         cy.get('[class="inner-ul"]').first().next().within(()=>{
-        //             cy.selectSynonym('רִנָּה')
-        //         })
-        //     }).then(()=>{
-        //         //The number in the top has 6
-        //         cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-        //             expect(parseInt($numberOfResults.text())).to.eq(6)
-        //         })
-        //     })
-        //     cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
-        //         cy.resultPagination({tests:'selectedMeaningsAndSynonyms',data:meaningsAndSynonymsMatrix})
-        //     })
-        // })
+        it('No meanings but there are synonyms',()=>{
+            cy.searchRun({text:'ששון חדווה',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            //Results not exist
+            cy.get('[class="result-list"]').should('not.exist').then(()=>{
+                cy.showMeaningsAndSynonyms()
+                //Select synonym of the word
+                cy.get('[class="inner-ul"]').first().within(()=>{
+                    cy.selectSynonym('גִּילָה')
+                })
+                //Select synonym of the word
+                cy.get('[class="inner-ul"]').first().next().within(()=>{
+                    cy.selectSynonym('רִנָּה')
+                })
+            }).then(()=>{
+                //The number in the top has 6
+                cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+                    expect(parseInt($numberOfResults.text())).to.eq(6)
+                })
+            })
+            cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
+                cy.resultPagination({tests:'selectedMeaningsAndSynonyms',data:meaningsAndSynonymsMatrix})
+            })
+        })
     
-        // // ////////////////////////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////////////////////////
     
         it('Search with root words',()=>{
             cy.searchRun({text:'ברא',collection:'תנ"ך',language:'Hebrew'})
@@ -385,8 +384,8 @@ sizes.forEach((size) => {
     
         it('Search missing ה and also get additional ה results',()=>{
             cy.searchRun({text:'כָּמֹוךָ',collection:'תנ"ך',language:'Hebrew'})
-            cy.theFormOfTheText('עם ניקוד')
-            cy.existsInResult('כָמֹכָה')
+            cy.theFormOfTheText('ללא ניקוד')
+            cy.existsInResult('כמכה')
         })
     
         // // it('Additional ה',()=>{
@@ -499,17 +498,17 @@ sizes.forEach((size) => {
         })
     
         
-        // it('HTML download', { browser: '!firefox' },()=>{
-        //     cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.removeDownloadsFiles()
-        //     cy.downloadFile({type:'HTML'}).then(()=>{
-        //         cy.validateFile({
-        //             type:'html',
-        //             resNum:12,
-        //             collection:'תנ"ך'
-        //         })
-        //     })
-        // })
+        it('HTML download', { browser: '!firefox' },()=>{
+            cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
+            cy.removeDownloadsFiles()
+            cy.downloadFile({type:'HTML'}).then(()=>{
+                cy.validateFile({
+                    type:'html',
+                    resNum:12,
+                    collection:'תנ"ך'
+                })
+            })
+        })
     
         // it('HTML download do not include the שמות קדושים', { browser: '!firefox' },()=>{
         //     cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
@@ -520,18 +519,18 @@ sizes.forEach((size) => {
         //     })
         // })
     
-        //, { browser: '!firefox' }
-        // it('TXT download',()=>{
-        //     cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.removeDownloadsFiles()
-        //     cy.downloadFile({type:'TXT'}).then(()=>{
-        //         cy.validateFile({
-        //             type:'txt',
-        //             resNum:12,
-        //             collection:'תנ"ך'
-        //         })
-        //     })
-        // })
+        , { browser: '!firefox' }
+        it('TXT download',()=>{
+            cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
+            cy.removeDownloadsFiles()
+            cy.downloadFile({type:'TXT'}).then(()=>{
+                cy.validateFile({
+                    type:'txt',
+                    resNum:12,
+                    collection:'תנ"ך'
+                })
+            })
+        })
     
         // it('TXT download do not include the שמות קדושים', { browser: '!firefox' },()=>{
         //     cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
@@ -542,17 +541,17 @@ sizes.forEach((size) => {
         //     })
         // })
     
-        // it('CSV download',()=>{
-        //     cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.removeDownloadsFiles()
-        //     cy.downloadFile({type:'CSV'}).then(()=>{
-        //         cy.validateFile({
-        //             type:'csv',
-        //             resNum:12,
-        //             collection:'תנ"ך'
-        //         })
-        //     })
-        // })
+        it('CSV download',()=>{
+            cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
+            cy.removeDownloadsFiles()
+            cy.downloadFile({type:'CSV'}).then(()=>{
+                cy.validateFile({
+                    type:'csv',
+                    resNum:12,
+                    collection:'תנ"ך'
+                })
+            })
+        })
     
         // it('CSV download do not include the שמות קדושים', { browser: '!firefox' },()=>{
         //     cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
@@ -563,21 +562,21 @@ sizes.forEach((size) => {
         //     })
         // })
     
-        // it('Word download', { browser: '!firefox' },()=>{
-        //     cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.removeDownloadsFiles()
-        //     cy.downloadFile({type:'Word'}).then(()=>{
-        //         //Convert file to html
-        //         cy.readFile('cypress/downloads/searchResults.docx').then(()=>{
-        //              cy.exec('npm run searchResults-convert', {failOnNonZeroExit: false})
-        //              cy.validateFile({
-        //                  type:'html',
-        //                  resNum:12,
-        //                  collection:'תנ"ך'
-        //              })
-        //          })
-        //     })
-        // })
+        it('Word download', { browser: '!firefox' },()=>{
+            cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
+            cy.removeDownloadsFiles()
+            cy.downloadFile({type:'Word'}).then(()=>{
+                //Convert file to html
+                cy.readFile('cypress/downloads/searchResults.docx').then(()=>{
+                     cy.exec('npm run searchResults-convert', {failOnNonZeroExit: false})
+                     cy.validateFile({
+                         type:'html',
+                         resNum:12,
+                         collection:'תנ"ך'
+                     })
+                 })
+            })
+        })
     
         // it('Word download do not include the שמות קדושים', { browser: '!firefox' },()=>{
         //     cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
