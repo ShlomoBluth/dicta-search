@@ -1,0 +1,11 @@
+;FFMETADATA1
+[CHAPTER]
+TIMEBASE=1/1000
+START=-657
+END=5678
+title=bible-search-tests Search with numbers
+[CHAPTER]
+TIMEBASE=1/1000
+START=9703
+END=12028
+title=bible-search-tests Search with numbers
