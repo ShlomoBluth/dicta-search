@@ -296,6 +296,11 @@ sizes.forEach((size) => {
                 })
             })
             cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
+                for(let i=0;i<meaningsAndSynonymsMatrix.length;i++){
+                    for(let j=0;j<meaningsAndSynonymsMatrix[i].length;j++){
+                        cy.log(meaningsAndSynonymsMatrix[i][j])
+                    }
+                }
                 cy.resultPagination({tests:'selectedMeaningsAndSynonyms',data:meaningsAndSynonymsMatrix})
             })
         })
