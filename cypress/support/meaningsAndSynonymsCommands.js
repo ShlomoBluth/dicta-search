@@ -142,11 +142,11 @@ Cypress.Commands.add('selectedMeaningWithSynonymArr',(wordMeaning)=>{
         })
       }else {
         cy.getTextNumbers().then(textNumbers=>{
-          if(textNumbers!=0){
+          //if(textNumbers!=0){
             cy.getWordInAList().then(word=>{
               meaningArr.push(word)
             })
-          }
+          //}
         })
       }
       cy.selectedSynonymArr($meaning).then(SynonymArr=>{
