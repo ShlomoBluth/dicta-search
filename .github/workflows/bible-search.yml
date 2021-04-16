@@ -32,9 +32,9 @@ jobs:
       run: npx cypress run --browser chrome --spec ./cypress/integration/bible-search-tests.js
       
 
-    #- name: Run firefox tests
-      #run: xvfb-run npx cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js
-      #if: ${{ always() }}  
+    - name: Run firefox tests
+      run: xvfb-run npx cypress run --browser firefox --spec ./cypress/integration/bible-search-tests.js
+      if: ${{ always() }}  
 
 
     - name: Copy test execution videos 
