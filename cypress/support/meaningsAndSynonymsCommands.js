@@ -212,6 +212,7 @@ Cypress.Commands.add('ResultsOfSelectedMeaningsAndSynonyms',(result,selectedMean
         hasMeanings=false
         //Loop through list of meaning and Synonym of the word
         for(let j=0;j<selectedMeaningsAndSynonyms[i].length;j++){
+          cy.log(selectedMeaningsAndSynonyms[i][j])
           let meaning=listMeanings.find(x=>x===selectedMeaningsAndSynonyms[i][j])
           //If meaning or synonym found in results list of meanings
           if(meaning===selectedMeaningsAndSynonyms[i][j]){
