@@ -289,7 +289,8 @@ sizes.forEach((size) => {
                 cy.get('[class="inner-ul"]').first().next().within(()=>{
                     cy.selectSynonym('רִנָּה')
                 })
-                cy.get('span').contains('שָׂשֹׂון').siblings('[class="text-numbers"').should('eq','(6)')
+                cy.get('span[class="f-narkis"]').contains('שָׂשֹׂון').siblings('[class="text-numbers"]')
+                .should('contain','(6)')
             }).then(()=>{
                 //The number in the top has 6
                 cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
