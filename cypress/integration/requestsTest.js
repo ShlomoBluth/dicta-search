@@ -5,13 +5,10 @@
 describe('RequestsTest',()=>{
 
     
-  before(() => {
+  beforeEach(() => {
     cy.visit('https://search.dicta.org.il/')
   })
 
-  afterEach(() => {
-    cy.go(-2)
-  })
 
   
 
