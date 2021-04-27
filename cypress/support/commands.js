@@ -8,11 +8,10 @@ Cypress.Commands.add('searchRequest',({url,language,status=200,message='',delayS
     delayMs:1000*delaySeconds,
     statusCode: status
   })
-  cy.setLanguageMode(language)
   if(message.length>0){
     cy.contains(message,{timeout:1000*delaySeconds}).should('not.exist')
   }  
-  cy.searchRun('בראשית ברא')
+  cy.searchRun({text:'בראשית ברא',language:language, delay:true})
 
   if(delaySeconds>0){
     cy.get('body').then(($body) => {
