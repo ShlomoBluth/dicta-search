@@ -2,7 +2,7 @@
 
 ////run tests on requests from search run some in hebrew mode and english mode
 
-let sizes = ['iphone-x',[1000, 660]]
+let sizes = [[1000, 660]]//'iphone-x',
 
 sizes.forEach((size) => {
 
@@ -12,17 +12,17 @@ sizes.forEach((size) => {
     beforeEach(() => {
       if (Cypress._.isArray(size)) {
         Cypress.config({
-            viewportWidth: size[0],
-            viewportHeight: size[1]
+          viewportWidth: size[0],
+          viewportHeight: size[1]
         })
         cy.viewport(size[0], size[1])
       } else {
         Cypress.config({
-            viewportWidth: 375,
-            viewportHeight: 812
+          viewportWidth: 375,
+          viewportHeight: 812
         })
         cy.viewport(size)
-    }
+      }
       cy.visit('https://search.dicta.org.il/')
     })
   
