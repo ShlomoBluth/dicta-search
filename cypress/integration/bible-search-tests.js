@@ -5,7 +5,7 @@ const path = require('path')
 
 
 
-let sizes = ['iphone-x',[1000, 660]]
+let sizes = [[1000, 660]]//'iphone-x',
 
 // before(()=>{
 //     cy.visit('/')
@@ -509,14 +509,14 @@ sizes.forEach((size) => {
             })
         })
     
-        // it('HTML download do not include the שמות קדושים', { browser: '!firefox' },()=>{
-        //     cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.removeDownloadsFiles()
-        //     cy.downloadFile({type:'HTML',shemotKdoshim:true}).then(()=>{
-        //         cy.fileDoesNotContain({type:'html',text:'אֱלֹהִים'})
-        //     })
-        // })
+        it('HTML download do not include the שמות קדושים', { browser: '!firefox' },()=>{
+            cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.removeDownloadsFiles()
+            cy.downloadFile({type:'HTML',shemotKdoshim:true}).then(()=>{
+                cy.fileDoesNotContain({type:'html',text:'אֱלֹהִים'})
+            })
+        })
     
         
         it('TXT download',()=>{
@@ -531,14 +531,14 @@ sizes.forEach((size) => {
             })
         })
     
-        // it('TXT download do not include the שמות קדושים', { browser: '!firefox' },()=>{
-        //     cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.removeDownloadsFiles()
-        //     cy.downloadFile({type:'TXT',shemotKdoshim:true}).then(()=>{
-        //         cy.fileDoesNotContain({type:'txt',text:'אֱלֹהִים'})
-        //     })
-        // })
+        it('TXT download do not include the שמות קדושים', { browser: '!firefox' },()=>{
+            cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.removeDownloadsFiles()
+            cy.downloadFile({type:'TXT',shemotKdoshim:true}).then(()=>{
+                cy.fileDoesNotContain({type:'txt',text:'אֱלֹהִים'})
+            })
+        })
     
         it('CSV download',()=>{
             cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
@@ -552,14 +552,14 @@ sizes.forEach((size) => {
             })
         })
     
-        // it('CSV download do not include the שמות קדושים', { browser: '!firefox' },()=>{
-        //     cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.removeDownloadsFiles()
-        //     cy.downloadFile({type:'CSV',shemotKdoshim:true}).then(()=>{
-        //         cy.fileDoesNotContain({type:'csv',text:'אֱלֹהִים'})
-        //     })
-        // })
+        it('CSV download do not include the שמות קדושים', { browser: '!firefox' },()=>{
+            cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.removeDownloadsFiles()
+            cy.downloadFile({type:'CSV',shemotKdoshim:true}).then(()=>{
+                cy.fileDoesNotContain({type:'csv',text:'אֱלֹהִים'})
+            })
+        })
     
         it('Word download',()=>{
             cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
@@ -577,18 +577,18 @@ sizes.forEach((size) => {
             })
         })
     
-        // it('Word download do not include the שמות קדושים', { browser: '!firefox' },()=>{
-        //     cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     cy.removeDownloadsFiles()
-        //     cy.downloadFile({type:'Word',shemotKdoshim:true}).then(()=>{
-        //         //Convert file to html
-        //         cy.readFile('cypress/downloads/searchResults.docx').then(()=>{
-        //             cy.exec('npm run searchResults-convert', {failOnNonZeroExit: false})
-        //             cy.fileDoesNotContain({type:'html',text:'אֱלֹהִים'})
-        //         })
-        //     })
-        // })
+        it('Word download do not include the שמות קדושים', { browser: '!firefox' },()=>{
+            cy.searchRun({text:'א-להים',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            cy.removeDownloadsFiles()
+            cy.downloadFile({type:'Word',shemotKdoshim:true}).then(()=>{
+                //Convert file to html
+                cy.readFile('cypress/downloads/searchResults.docx').then(()=>{
+                    cy.exec('npm run searchResults-convert', {failOnNonZeroExit: false})
+                    cy.fileDoesNotContain({type:'html',text:'אֱלֹהִים'})
+                })
+            })
+        })
     
      })
 })
